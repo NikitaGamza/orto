@@ -55,7 +55,7 @@ export default function ProductPage() {
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    // const { data } = await axios.get(`/api/products/${product._id}`);
     // if (data.countInStock < quantity) {
     //   window.alert('Извините, товар отсутствует')
     //   return

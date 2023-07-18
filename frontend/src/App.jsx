@@ -8,13 +8,18 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Store } from './Store';
 import CartPage from './components/CartPage';
 import SigninPage from './components/SigninPage';
 import ShippingAddress from './components/ShippingAddress';
 import SignupPage from './components/SignupPage';
 import PaymentPage from './components/PaymentPage';
+import Button from 'react-bootstrap/esm/Button';
+import { getError } from './utils';
+import axios from 'axios';
+import SearchBox from './components/SearchBox';
+import SearchPage from './components/SearchPage';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -25,16 +30,42 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
   };
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCatigories = async () => {
+      try {
+        const { data } = await axios.get(`/api/products/categories`);
+        setCategories(data);
+      } catch (err) {
+        alert(getError(err));
+      }
+    };
+    fetchCatigories();
+  }, []);
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column site-container">
+      <div
+        className={
+          sidebarIsOpen
+            ? 'd-flex flex-column site-container active-cont'
+            : 'd-flex flex-column site-container'
+        }
+      >
         <header className="app">
           <Navbar bg="dark" variant="dark">
             <Container>
+              <Button
+                variant="dark"
+                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+              >
+                <i className="fas fa-bars"></i>
+              </Button>
               <LinkContainer to="/">
                 <Navbar.Brand>OrtoKomi</Navbar.Brand>
               </LinkContainer>
               <Nav className="me-auto">
+                <SearchBox />
                 <Link to="/cart" className="nav-link">
                   Корзина
                   {cart.cartItems.length > 0 && (
@@ -71,11 +102,35 @@ function App() {
             </Container>
           </Navbar>
         </header>
+        <div
+          className={
+            sidebarIsOpen
+              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
+              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
+          }
+        >
+          <Nav className="flex-column text-white w-100 p-2">
+            <Nav.Item>
+              <strong>Категории</strong>
+            </Nav.Item>
+            {categories.map((category) => (
+              <Nav.Item key={category}>
+                <Link
+                  to={`/search?category=${category}`}
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <p className="cat-link">{category}</p>
+                </Link>
+              </Nav.Item>
+            ))}
+          </Nav>
+        </div>
         <main>
           <Container>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/signin" element={<SigninPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/shipping" element={<ShippingAddress />} />
