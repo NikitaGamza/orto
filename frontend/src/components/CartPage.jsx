@@ -18,7 +18,7 @@ export default function CartPage() {
   } = state;
 
   const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(`/api/products/${item._id}`);
+    // const { data } = await axios.get(`/api/products/${item._id}`);
     // if (data.countInStock < quantity) {
     //   window.alert('Извините, товар отсутствует')
     //   return
@@ -29,6 +29,9 @@ export default function CartPage() {
       // payload: {...product, quantity: 1}//было
     });
   };
+
+  console.log(Array.isArray(cartItems));
+  console.log(cartItems);
 
   const removeItemHandler = (item) => {
     ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });

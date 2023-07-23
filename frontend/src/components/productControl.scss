@@ -1,0 +1,26 @@
+.control-row {
+  //   height: 100px;
+  display: flex;
+  width: 600px;
+}
+.control-wrap {
+  display: block;
+}
+.control-img {
+  height: 200px;
+}
+.control-edit {
+  display: block;
+}
+.control-add {
+  background-color: #0d00ff;
+  color: white;
+  border: none;
+  width: 25px;
+  padding-bottom: 2px;
+  border-radius: 60px;
+  display: inline;
+}
+.control-add-head {
+  display: inline;
+}

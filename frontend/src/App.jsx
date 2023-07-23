@@ -20,6 +20,8 @@ import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
 import SearchPage from './components/SearchPage';
+import ProductControl from './components/ProductControl';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -98,6 +100,13 @@ function App() {
                     Войти
                   </Link>
                 )}
+                {userInfo && userInfo.isAdmin && (
+                  <NavDropdown title="Admin" id="admin-nav-dropdown">
+                    <LinkContainer to="/admin/product-control">
+                      <NavDropdown.Item>Товары</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                )}
               </Nav>
             </Container>
           </Navbar>
@@ -136,6 +145,15 @@ function App() {
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/product/:slug" element={<ProductPage />} />
+              {/* Admin Routes */}
+              <Route
+                path="/admin/product-control"
+                element={
+                  <AdminRoute>
+                    <ProductControl />
+                  </AdminRoute>
+                }
+              />
             </Routes>
           </Container>
         </main>
