@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-import axios from 'axios';
+// import axios from 'axios';
 import { useContext } from 'react';
 import { Store } from '../Store';
-import Button from 'react-bootstrap/esm/Button';
+// import Button from 'react-bootstrap/esm/Button';
 
 export default function ProductList(props) {
   const { product } = props;
@@ -33,7 +33,7 @@ export default function ProductList(props) {
     <div className="product" key={product.slug}>
       <Link to={`/product/${product.slug}`}>
         <img
-          src={product.image[0]}
+          src={`http://localhost:5000/static/images/products/${product.image[0]}.jpg`}
           alt={product.slug}
           className="product__img"
         />
@@ -42,10 +42,9 @@ export default function ProductList(props) {
       <div className="product__info">
         <Link to={`/product/${product.slug}`}>
           <strong>
-            <p className="product__info__name">
-              {product.name} {product.size ? product.size : <></>}{' '}
-              {product.length ? product.length : <></>}
-            </p>
+            <p className="product__info__name">{product.name}</p>
+            {product.size && <p>Размер: {product.size}</p>}
+            {product.length && <p>Длинна: {product.length}</p>}
           </strong>
         </Link>
         {/* {product.countInStock === 0 ? (<Button variant='light' disabled>Нет в наличии</Button>) : (<Button></Button>)} */}

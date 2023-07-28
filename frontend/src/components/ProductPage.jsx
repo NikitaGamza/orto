@@ -75,10 +75,11 @@ export default function ProductPage() {
     <div className="flex_wrap_spacearound product__details">
       <div>
         {product.image.map((item) => {
+          console.log(item);
           return (
             <img
               className="product__details__img"
-              src={item}
+              src={`http://localhost:5000/static/images/products/${item}.jpg`}
               alt={product.name}
             />
           );

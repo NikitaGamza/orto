@@ -1,10 +1,15 @@
 import express from 'express';
+import path from 'path';
 import data from './data.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -21,6 +26,9 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const publicPath = path.join(__dirname, 'public');
+app.use('/static', express.static(publicPath));
 
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);

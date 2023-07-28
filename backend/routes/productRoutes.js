@@ -1,6 +1,9 @@
 import express, { query } from 'express';
 import Product from '../models/productModel.js';
 import expressAsyncHandler from 'express-async-handler';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
 
 const productRouter = express.Router();
 
@@ -118,4 +121,74 @@ productRouter.get('/:id', async (req, res) => {
   }
 });
 
+productRouter.post('/addproduct', async (req, res) => {
+  const body = req.body;
+  // TODO: валидация
+  const newProduct = await Product.create(body);
+  newProduct.save();
+
+  console.log(body);
+});
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+productRouter.post('/upload', upload.array('images'), async (req, res) => {
+  // console.log(req.body);
+
+  const names = req.body.names.split(',');
+
+  req.files.forEach((file, index) => {
+    const filePath = path.join(
+      './public/images/products',
+      names[index] + '.jpg'
+    );
+    fs.writeFileSync(filePath, file.buffer);
+  });
+
+  res.json({});
+});
+
+productRouter.post('/update', async (req, res) => {
+  const body = req.body;
+  console.log(body);
+});
+
 export default productRouter;
+
+/*
+
+1. отправляем файл
+2. получаем ссылку на файл
+3. собираем body -> отправляем по /addproduct
+
+*/
+
+// Создаем транспорт для отправки электронной почты
+// const transporter = nodemailer.createTransport({
+//   service: 'smtp.yandex.ru', // Используем сервис Yandex
+//   host: "smtp.yandex.ru",
+//   secure: false, // TLS требует, чтобы secureConnection был false
+//   port: 465,
+//   auth: {
+//     user: 'noreply@fotrum.com',
+//     pass: ''
+//   }
+// });
+
+// const info = await transporter.sendMail({
+//   from: '"Fred Foo 👻" <foo@example.com>', // sender address
+//   to: "bar@example.com, baz@example.com", // list of receivers
+//   subject: "Hello ✔", // Subject line
+//   text: "Hello world?", // plain text body
+//   html: "<b>Hello world?</b>", // html body
+// })
+
+// const storage = multer.diskStorage({
+//   destination: './public/images/products',
+//   filename: function (req, file, cb) {
+//     console.log(req.body.names);
+//     console.log(file.originalname);
+//     cb(null, file.originalname);
+//   },
+// });
