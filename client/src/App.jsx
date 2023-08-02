@@ -1,6 +1,6 @@
-import './app.scss';
-import HomeScreen from './components/HomeScreen';
-import ProductPage from './components/ProductPage';
+import './App.scss';
+import HomePage from './components/pages/HomePage';
+import ProductAdminPage from './components/pages/ProductPage';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
@@ -8,19 +8,19 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { Store } from './Store';
-import CartPage from './components/CartPage';
-import SigninPage from './components/SigninPage';
-import ShippingAddress from './components/ShippingAddress';
-import SignupPage from './components/SignupPage';
-import PaymentPage from './components/PaymentPage';
+import CartPage from './components/pages/CartPage';
+import SigninPage from './components/pages/SigninPage';
+import ShippingAddressPage from './components/pages/ShippingAddressPage';
+import SignupPage from './components/pages/SignupPage';
+import PaymentPage from './components/pages/PaymentPage';
 import Button from 'react-bootstrap/esm/Button';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
-import SearchPage from './components/SearchPage';
-import ProductControl from './components/ProductControl';
+import SearchPage from './components/pages/SearchPage';
+import ProductControl from './components/pages/admin-pages/ProductAdminPage';
 import AdminRoute from './components/AdminRoute';
 
 function App() {
@@ -34,17 +34,20 @@ function App() {
   };
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    const fetchCatigories = async () => {
-      try {
-        const { data } = await axios.get(`/api/products/categories`);
-        setCategories(data);
-      } catch (err) {
-        alert(getError(err));
-      }
-    };
-    fetchCatigories();
-  }, []);
+
+  // const fetchCatigories = async () => {
+  //   try {
+  //     const { data } = await axios.get(`/api/products/categories`);
+  //     setCategories(data);
+  //   } catch (err) {
+  //     alert(getError(err));
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCatigories();
+  // }, []);
+
   return (
     <BrowserRouter>
       <div
@@ -137,14 +140,14 @@ function App() {
         <main>
           <Container>
             <Routes>
-              <Route path="/" element={<HomeScreen />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/signin" element={<SigninPage />} />
               <Route path="/signup" element={<SignupPage />} />
-              <Route path="/shipping" element={<ShippingAddress />} />
+              <Route path="/shipping" element={<ShippingAddressPage />} />
               <Route path="/payment" element={<PaymentPage />} />
-              <Route path="/product/:slug" element={<ProductPage />} />
+              <Route path="/product/:slug" element={<ProductAdminPage />} />
               {/* Admin Routes */}
               <Route
                 path="/admin/product-control"

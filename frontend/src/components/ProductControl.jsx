@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import './ProductControl.scss';
 // import { Link } from 'react-router-dom';
 //import data from '../data';
-// import { useEffect, useReducer } from 'react';
-// import axios from 'axios';
-
+import { useEffect, useReducer } from 'react';
+import axios from 'axios';
+import logger from 'use-reducer-logger';
 // import { Helmet } from 'react-helmet-async';
-import Loading from '../Loading';
-import MessageBox from '../MessageBox';
+import Loading from './Loading';
+import MessageBox from './MessageBox';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
-import { NULL } from 'node-sass';
-import ModalEdit from '../ModalEdit';
+import ModalEdit from './ModalEdit';
 
-import useProduct from './hooks/useProduct.hook';
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, products: action.payload, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 export default function ProductControl() {
   const [productId, setProductId] = useState(null);
@@ -31,8 +41,25 @@ export default function ProductControl() {
   const [visibleAdd, setVisibleAdd] = useState(false);
   const [country, setCountry] = useState('');
   const [description, setDescription] = useState('');
+  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+    products: [],
+    loading: true,
+    error: '',
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get('/api/products');
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+      }
 
-  const [products, loading, error] = useProduct();
+      //setProducts(result.data);
+    };
+    fetchData();
+  }, []);
 
   const addProduct = async (e) => {
     e.preventDefault();
