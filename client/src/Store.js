@@ -19,6 +19,9 @@ const initialState = {
     loading: false,
     list: null,
     error: null,
+    isVisibleEditModal: true,
+    editProductId: null,
+    removeProductId: null,
   },
 };
 
@@ -78,6 +81,33 @@ function reducer(state, action) {
       return {
         ...state,
         product: { ...state.product, list: null, loading: false },
+      };
+
+    case 'TOGGLE_EDIT_MODAL':
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          isVisibleEditModal: action.payload,
+        },
+      };
+
+    case 'SET_EDIT_PRODUCT_ID':
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          editProductId: action.payload,
+        },
+      };
+
+    case 'SET_REMOVE_PRODUCT_ID':
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          removeProductId: action.payload,
+        },
       };
 
     default:

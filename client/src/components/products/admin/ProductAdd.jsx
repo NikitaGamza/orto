@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
-import Input from './Input';
+import Input from '../../ui/Input';
+import ModalWindow from '../../ui/ModalWindow';
 
 export default function ProductAdd(props) {
   const { visibleAdd, setVisibleAdd } = props;
@@ -9,7 +10,6 @@ export default function ProductAdd(props) {
   const [files, setFiles] = useState([]);
 
   const [product, setProduct] = useState({});
-  const imageRef = useRef(null);
 
   const addProduct = async (e) => {
     e.preventDefault();
@@ -66,14 +66,12 @@ export default function ProductAdd(props) {
       });
 
       const data = await response.json();
+
+      setVisibleAdd(false);
     } catch (error) {
       console.error(error.message);
     }
   };
-
-  if (!visibleAdd) {
-    return null;
-  }
 
   const Inputs = [
     { title: 'Наименование', propName: 'nameProduct' },
@@ -94,25 +92,16 @@ export default function ProductAdd(props) {
 
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
-
-      // console.log(URL.createObjectURL(file));
-      const fileReader = new FileReader();
-      console.log(fileReader.readAsDataURL(file));
-
-      imageRef.src = URL.createObjectURL(file);
-
       setFiles((prevValue) => [...prevValue, file]);
     }
   };
 
   return (
-    <>
+    <ModalWindow isVisible={visibleAdd} setIsVisible={setVisibleAdd}>
       <Form onSubmit={(e) => addProduct(e)}>
         <Form.Group controlId="formFileMultiple" className="mb-3">
           <Form.Label>Картинки</Form.Label>
           <input type="file" multiple onChange={onChangeFileInput} />
-
-          <img src="" alt="" ref={imageRef} />
         </Form.Group>
 
         {Inputs.map((i) => (
@@ -124,7 +113,10 @@ export default function ProductAdd(props) {
         ))}
 
         <Button type="submit">Добавить</Button>
+        <Button type="button" onClick={() => setVisibleAdd(false)}>
+          Отменить
+        </Button>
       </Form>
-    </>
+    </ModalWindow>
   );
 }

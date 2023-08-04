@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { Store } from '../../../Store';
 
 export default function ProductItem(props) {
-  const { product, setModalVisible, setProductId } = props;
+  const { product } = props;
 
-  const onEdit = () => {
-    setModalVisible(true);
-    setProductId(product._id);
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+
+  const getIsVisible = () => state.product.isVisibleEditModal;
+
+  const onEdit = (id) => {
+    const toggleEditModalAction = {
+      type: 'TOGGLE_EDIT_MODAL',
+      payload: !getIsVisible(),
+    };
+
+    const setEditProductId = {
+      type: 'SET_EDIT_PRODUCT_ID',
+      payload: id,
+    };
+    ctxDispatch(toggleEditModalAction);
+    ctxDispatch(setEditProductId);
   };
 
   const onRemove = (id) => {};
@@ -37,7 +51,7 @@ export default function ProductItem(props) {
             className="control-edit"
             type="button"
             value="Редактировать"
-            onClick={onEdit}
+            onClick={() => onEdit(product._id)}
           />
 
           <input
