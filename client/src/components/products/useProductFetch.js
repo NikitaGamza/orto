@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useLayoutEffect } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { Store } from '../../Store';
 
 const useProductFetch = () => {
@@ -7,6 +7,8 @@ const useProductFetch = () => {
   const {
     product: { list, loading, error },
   } = state;
+
+  const [isUpdateList, setIsUpdateList] = useState(true);
 
   const productFetch = async () => {
     const actionFetchRequest = {
@@ -16,10 +18,16 @@ const useProductFetch = () => {
     ctxDispatch(actionFetchRequest);
 
     try {
-      const products = await axios.get('/api/products');
+      const productsResponse = await fetch('/api/products', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const products = await productsResponse.json();
       const fetchSuccessAction = {
         type: 'FETCH_PRODUCT_SUCCESS',
-        payload: products.data,
+        payload: products,
       };
       ctxDispatch(fetchSuccessAction);
     } catch (err) {
@@ -30,11 +38,18 @@ const useProductFetch = () => {
     }
   };
 
-  useLayoutEffect(() => {
-    productFetch();
-  }, []);
+  useEffect(() => {
+    if (isUpdateList) {
+      productFetch();
+      setIsUpdateList(false);
+    }
+  }, [isUpdateList]);
 
-  return [list, loading, error];
+  const onUpdateList = () => {
+    setIsUpdateList(true);
+  };
+
+  return [list, loading, error, onUpdateList];
 };
 
 export default useProductFetch;

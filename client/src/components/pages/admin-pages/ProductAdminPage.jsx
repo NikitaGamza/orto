@@ -11,13 +11,8 @@ export default function ProductAdminPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
 
   const [visibleAdd, setVisibleAdd] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [products, loading, error] = useProductFetch();
-
-  useLayoutEffect(() => {
-    console.log(state.product.isVisibleEditModal);
-  }, [state.product.isVisibleEditModal]);
+  const [products, loading, error, onUpdateList] = useProductFetch();
 
   const onSetIsVisibleEditModal = (value) => {
     ctxDispatch({
@@ -34,6 +29,7 @@ export default function ProductAdminPage() {
       <ModalEdit
         isModalVisible={state.product.isVisibleEditModal}
         setIsModalVisible={onSetIsVisibleEditModal}
+        updateList={onUpdateList}
       />
 
       <ProductList products={products} loading={loading} error={error} />

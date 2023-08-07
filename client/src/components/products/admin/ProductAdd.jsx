@@ -3,13 +3,15 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
 import Input from '../../ui/Input';
 import ModalWindow from '../../ui/ModalWindow';
+import InputFile from '../../ui/InputFile/InputFile';
+import useInputFile from '../../ui/InputFile/useInputFile';
 
 export default function ProductAdd(props) {
   const { visibleAdd, setVisibleAdd } = props;
 
-  const [files, setFiles] = useState([]);
-
   const [product, setProduct] = useState({});
+
+  const [files, setFiles, onRemoveFile] = useInputFile();
 
   const addProduct = async (e) => {
     e.preventDefault();
@@ -48,9 +50,11 @@ export default function ProductAdd(props) {
     // };
 
     const productClone = product;
-    productClone.files = files.map(
-      (item, index) => `${item.nameProduct}-${item.articul}-${index}`
+    productClone.image = files.map(
+      (item, index) =>
+        `${productClone.nameProduct}-${productClone.articul}-${index}`
     );
+    productClone.name = productClone.nameProduct;
     productClone.color = productClone.color.split(',').map((i) => i.trim());
     productClone.price = Number(productClone.price);
 
@@ -87,36 +91,31 @@ export default function ProductAdd(props) {
     { title: 'Описание', propName: 'description' },
   ];
 
-  const onChangeFileInput = (event) => {
-    const files = event.target.files;
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files.item(i);
-      setFiles((prevValue) => [...prevValue, file]);
-    }
-  };
-
   return (
     <ModalWindow isVisible={visibleAdd} setIsVisible={setVisibleAdd}>
-      <Form onSubmit={(e) => addProduct(e)}>
-        <Form.Group controlId="formFileMultiple" className="mb-3">
-          <Form.Label>Картинки</Form.Label>
-          <input type="file" multiple onChange={onChangeFileInput} />
-        </Form.Group>
-
+      <div>
+        <InputFile
+          value={files}
+          setFiles={setFiles}
+          onRemove={onRemoveFile}
+          imageUrlsDefault={[]}
+        />
         {Inputs.map((i) => (
           <Input
             title={i.title}
             setProduct={setProduct}
+            product={product}
             propName={i.propName}
           />
         ))}
 
-        <Button type="submit">Добавить</Button>
+        <Button type="submit" onClick={(e) => addProduct(e)}>
+          Добавить
+        </Button>
         <Button type="button" onClick={() => setVisibleAdd(false)}>
           Отменить
         </Button>
-      </Form>
+      </div>
     </ModalWindow>
   );
 }

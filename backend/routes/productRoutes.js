@@ -149,9 +149,16 @@ productRouter.post('/upload', upload.array('images'), async (req, res) => {
   res.json({});
 });
 
-productRouter.post('/update', async (req, res) => {
-  const body = req.body;
-  console.log(body);
+productRouter.put('/', async (req, res) => {
+  const product = req.body;
+
+  console.log(product);
+
+  const editedProduct = await Product.findByIdAndUpdate(product._id, product, {
+    new: true,
+  });
+
+  res.json(editedProduct);
 });
 
 export default productRouter;

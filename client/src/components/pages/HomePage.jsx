@@ -23,7 +23,7 @@ const reducer = (state, action) => {
 };
 
 export default function HomePage() {
-  const [products, loading, error] = useProductFetch();
+  const [products, loading, error, onUpdateList] = useProductFetch();
 
   return (
     <>

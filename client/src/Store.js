@@ -19,7 +19,7 @@ const initialState = {
     loading: false,
     list: null,
     error: null,
-    isVisibleEditModal: true,
+    isVisibleEditModal: false,
     editProductId: null,
     removeProductId: null,
   },
