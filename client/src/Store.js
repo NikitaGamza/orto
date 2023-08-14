@@ -16,6 +16,11 @@ const initialState = {
   },
 
   product: {
+    detail: {
+      product: null,
+      loading: true,
+      error: ''
+    },
     loading: false,
     list: null,
     error: null,
@@ -30,6 +35,12 @@ export const ActionTypes = {
   CART_ADD_ITEM: 'CART_ADD_ITEM',
   UPDATE_LIST_START: 'UPDATE_LIST_START',
   UPDATE_LIST_FINISH: 'UPDATE_LIST_FINISH',
+
+  // Product details
+  FETCH_SUCCESS_PRODUCT_DETAILS: 'FETCH_SUCCESS_PRODUCT_DETAILS',
+  FETCH_FAIL_PRODUCT_DETAILS: 'FETCH_FAIL_PRODUCT_DETAILS',
+  FETCH_REQUEST_PRODUCT_DETAILS: 'FETCH_REQUEST_PRODUCT_DETAILS',
+
 };
 
 function reducer(state, action) {
@@ -39,6 +50,10 @@ function reducer(state, action) {
       const existItem = state.cart.cartItems.find(
         (item) => item._id === newItem._id
       );
+
+      const quantity = existItem ? existItem.quantity + 1 : 1;
+      newItem.quantity = quantity
+
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
             item._id === existItem._id ? newItem : item
@@ -46,6 +61,7 @@ function reducer(state, action) {
         : [...state.cart.cartItems, newItem];
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
+
     //add to cart
     case 'CART_REMOVE_ITEM': {
       const cartItems = state.cart.cartItems.filter(
@@ -134,6 +150,46 @@ function reducer(state, action) {
           isUpdateList: false,
         },
       };
+
+    case ActionTypes.FETCH_REQUEST_PRODUCT_DETAILS:
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          detail: {
+            ...state.product.details,
+            loading: true
+          }
+        }
+      }
+
+
+    case ActionTypes.FETCH_SUCCESS_PRODUCT_DETAILS:
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          detail: {
+            ...state.product.details,
+            product: action.payload,
+            loading: false
+          }
+        }
+      }
+
+    case ActionTypes.FETCH_FAIL_PRODUCT_DETAILS:
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          detail: {
+            ...state.product.details,
+            error: action.payload
+          }
+        }
+      }
+
+
     default:
       return state;
   }
@@ -144,7 +200,3 @@ export function StoreProvider(props) {
   const value = { state, dispatch };
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
-// 1. создается компонент
-// загрузки нет
-// 2. запрос на сервер
-// 3. получение ответа

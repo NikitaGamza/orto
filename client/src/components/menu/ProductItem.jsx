@@ -1,7 +1,8 @@
 import { useContext } from 'react';
-import { Store } from '../../../Store';
+import { Store } from '../../Store';
 import { Link } from 'react-router-dom';
-import Rating from '../../Rating';
+import Rating from './Rating';
+
 
 export default function ProductItem(props) {
   const { product } = props;

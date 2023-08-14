@@ -1,6 +1,6 @@
 import './App.scss';
-import HomePage from './components/pages/HomePage';
-import ProductAdminPage from './components/pages/ProductPage';
+import HomePage from './pages/HomePage';
+import ProductAdminPage from './pages/ProductPage';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
@@ -10,19 +10,23 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { Store } from './Store';
-import CartPage from './components/pages/CartPage';
-import SigninPage from './components/pages/SigninPage';
-import ShippingAddressPage from './components/pages/ShippingAddressPage';
-import SignupPage from './components/pages/SignupPage';
-import PaymentPage from './components/pages/PaymentPage';
+import CartPage from './pages/CartPage';
+import SigninPage from './pages/SigninPage';
+import ShippingAddressPage from './pages/ShippingAddressPage';
+import SignupPage from './pages/SignupPage';
+import PaymentPage from './pages/PaymentPage';
 import Button from 'react-bootstrap/esm/Button';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
-import SearchPage from './components/pages/SearchPage';
-import ProductControl from './components/pages/admin-pages/ProductAdminPage';
-import AdminRoute from './components/AdminRoute';
-import ProductCategory from './components/products/admin/ProductCategory';
+import SearchPage from './pages/SearchPage';
+import ProductControl from './pages/admin-pages/ProductAdminPage';
+import AdminRoute from './routing/AdminRoute';
+import ProductCategory from './components/admin/ProductCategory';
+import { getProductCategory } from "./api/product";
+import SideBar from "./components/SideBar";
+import Header from "./components/header";
+import Routing from "./routing/Routing";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -33,12 +37,14 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
   };
+
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
   const fetchCatigories = async () => {
     try {
-      const { data } = await axios.get(`/api/products/categories`);
+      const {data} = await getProductCategory()
+
       setCategories(data);
     } catch (err) {
       alert(getError(err));
@@ -58,120 +64,18 @@ function App() {
             : 'd-flex flex-column site-container'
         }
       >
-        <header className="app">
-          <Navbar bg="dark" variant="dark">
-            <Container>
-              <Button
-                variant="dark"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
-              >
-                <i className="fas fa-bars"></i>
-              </Button>
-              <LinkContainer to="/">
-                <Navbar.Brand>OrtoKomi</Navbar.Brand>
-              </LinkContainer>
-              <Nav className="me-auto">
-                <SearchBox />
-                <Link to="/cart" className="nav-link">
-                  Корзина
-                  {cart.cartItems.length > 0 && (
-                    <Badge pill bg="danger">
-                      {/* {cart.cartItems.length} */}
-                      {/* было */}
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                    </Badge>
-                  )}
-                </Link>
-                {userInfo ? (
-                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>Профиль</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/history">
-                      <NavDropdown.Item>История заказов</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Divider />
-                    <Link
-                      className="dropdown-item"
-                      to="#signout"
-                      onClick={signoutHandler}
-                    >
-                      Выход
-                    </Link>
-                  </NavDropdown>
-                ) : (
-                  <Link className="nav-link" to="signin">
-                    Войти
-                  </Link>
-                )}
-                {userInfo && userInfo.isAdmin && (
-                  <NavDropdown title="Admin" id="admin-nav-dropdown">
-                    <LinkContainer to="/admin/product-control">
-                      <NavDropdown.Item>Товары</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/admin/product-category">
-                      <NavDropdown.Item>Категории</NavDropdown.Item>
-                    </LinkContainer>
-                  </NavDropdown>
-                )}
-              </Nav>
-            </Container>
-          </Navbar>
-        </header>
-        <div
-          className={
-            sidebarIsOpen
-              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
-              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
-          }
-        >
-          <Nav className="flex-column text-white w-100 p-2">
-            <Nav.Item>
-              <strong>Категории</strong>
-            </Nav.Item>
-            {categories.map((category) => (
-              <Nav.Item key={category}>
-                <Link
-                  to={`/search?category=${category}`}
-                  onClick={() => setSidebarIsOpen(false)}
-                >
-                  <p className="cat-link">{category}</p>
-                </Link>
-              </Nav.Item>
-            ))}
-          </Nav>
-        </div>
+        <Header userInfo={userInfo} signoutHandler={signoutHandler} cart={cart} sidebarIsOpen={sidebarIsOpen} setSidebarIsOpen={setSidebarIsOpen} />
+
+
+        <SideBar categories={categories} sidebarIsOpen={sidebarIsOpen} setSidebarIsOpen={setSidebarIsOpen} />
+
+
         <main>
           <Container>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/signin" element={<SigninPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/shipping" element={<ShippingAddressPage />} />
-              <Route path="/payment" element={<PaymentPage />} />
-              <Route path="/product/:slug" element={<ProductAdminPage />} />
-              {/* Admin Routes */}
-              <Route
-                path="/admin/product-control"
-                element={
-                  <AdminRoute>
-                    <ProductControl />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/product-category"
-                element={
-                  <AdminRoute>
-                    <ProductCategory />
-                  </AdminRoute>
-                }
-              />
-            </Routes>
+            <Routing />
           </Container>
         </main>
+
         <footer className="text-center">Все права защищены</footer>
       </div>
     </BrowserRouter>

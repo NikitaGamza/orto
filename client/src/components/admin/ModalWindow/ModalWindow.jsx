@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import './ModalWindow.scss';
-import { Store } from '../../Store';
+import { Store } from '../../../Store';
 
 export default function ModalWindow(props) {
   const { children, isVisible, setIsVisible } = props;

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import ModalWindow from '../../ui/ModalWindow';
-import { Store } from '../../../Store';
-import Input from '../../ui/Input';
-import InputFile from '../../ui/InputFile/InputFile';
-import useInputFile from '../../ui/InputFile/useInputFile';
+import ModalWindow from './ModalWindow/ModalWindow';
+import { Store } from '../../Store';
+import Input from './Input';
+import InputFile from '../ui/InputFile/InputFile';
+import useInputFile from '../ui/InputFile/useInputFile';
 
 export default function ModalEdit(props) {
   const { isModalVisible, setIsModalVisible, updateList } = props;

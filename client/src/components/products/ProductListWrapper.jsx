@@ -1,5 +1,5 @@
-import Loading from '../Loading';
-import MessageBox from '../MessageBox';
+import Loading from '../ui/Loading';
+import MessageBox from '../ui/MessageBox';
 
 export default function ProductListWrapper(props) {
   const { children, error, loading } = props;

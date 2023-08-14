@@ -1,4 +1,4 @@
-import ProductListWrapper from '../ProductListWrapper';
+import ProductListWrapper from '../products/ProductListWrapper';
 import ProductItem from './ProductItem';
 
 export default function ProductList(props) {

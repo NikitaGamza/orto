@@ -1,16 +1,16 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { getError } from '../../utils';
+import { getError } from '../utils';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Rating from '../Rating';
-import Loading from '../Loading';
-import MessageBox from '../MessageBox';
+import Rating from '../components/menu/Rating';
+import Loading from '../components/ui/Loading';
+import MessageBox from '../components/ui/MessageBox';
 import Button from 'react-bootstrap/esm/Button';
 // import ProductList from '../products/menu/ProductList';
-import ProductItem from '../products/menu/ProductItem';
+import ProductItem from '../components/menu/ProductItem';
 
 const reducer = (state, action) => {
   switch (action.type) {

@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { Store } from '../../Store';
+import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
-import MessageBox from '../MessageBox';
+import MessageBox from '../components/ui/MessageBox';
 import { Link, useNavigate } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
@@ -18,20 +18,12 @@ export default function CartPage() {
   } = state;
 
   const updateCartHandler = async (item, quantity) => {
-    // const { data } = await axios.get(`/api/products/${item._id}`);
-    // if (data.countInStock < quantity) {
-    //   window.alert('Извините, товар отсутствует')
-    //   return
-    // }
     ctxDispatch({
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
-      // payload: {...product, quantity: 1}//было
     });
   };
 
-  console.log(Array.isArray(cartItems));
-  console.log(cartItems);
 
   const removeItemHandler = (item) => {
     ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
@@ -39,12 +31,15 @@ export default function CartPage() {
   const checkoutHandler = () => {
     navigate('/signin?redirect=/shipping');
   };
+
   return (
     <div>
       <Helmet>
         <title>Корзина</title>
       </Helmet>
+
       <h1>Корзина</h1>
+
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (
@@ -100,6 +95,8 @@ export default function CartPage() {
             </ListGroup>
           )}
         </Col>
+
+
         <Col md={4}>
           <Card>
             <Card.Body>
@@ -112,6 +109,7 @@ export default function CartPage() {
                     рублей
                   </h3>
                 </ListGroup.Item>
+
                 <ListGroup.Item>
                   <div className="d-grid">
                     <Button

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ActionTypes, Store } from '../../../Store';
+import { ActionTypes, Store } from '../../Store';
 
 export default function ProductItem(props) {
   const { product } = props;

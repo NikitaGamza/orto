@@ -1,10 +1,7 @@
-import { Link } from 'react-router-dom';
-// import Rating from './Rating';
-// import axios from 'axios';
-import { useContext } from 'react';
-import ProductListWrapper from '../ProductListWrapper';
+import ProductListWrapper from '../products/ProductListWrapper';
 import ProductItem from './ProductItem';
 import './ProductList.scss';
+
 
 export default function ProductList(props) {
   const { products, loading, error } = props;

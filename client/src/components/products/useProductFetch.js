@@ -4,6 +4,7 @@ import { ActionTypes, Store } from '../../Store';
 
 const useProductFetch = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
+
   const {
     product: { list, loading, error, isUpdateList },
   } = state;

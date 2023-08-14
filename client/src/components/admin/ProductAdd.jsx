@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
-import Input from '../../ui/Input';
-import ModalWindow from '../../ui/ModalWindow';
-import InputFile from '../../ui/InputFile/InputFile';
-import useInputFile from '../../ui/InputFile/useInputFile';
+import Input from './Input';
+import ModalWindow from './ModalWindow/ModalWindow';
+import InputFile from '../ui/InputFile/InputFile';
+import useInputFile from '../ui/InputFile/useInputFile';
 
 export default function ProductAdd(props) {
   const { visibleAdd, setVisibleAdd } = props;

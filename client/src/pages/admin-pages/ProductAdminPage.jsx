@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import './ProductAdminPage.scss';
-import ProductList from '../../products/admin/ProductList';
-import useProductFetch from '../../products/useProductFetch';
-import ProductAdd from '../../products/admin/ProductAdd';
-import Control from '../../ui/Control';
-import ModalEdit from '../../products/admin/ModalEdit';
-import { Store } from '../../../Store';
+import ProductList from '../../components/admin/ProductList';
+import useProductFetch from '../../components/products/useProductFetch';
+import ProductAdd from '../../components/admin/ProductAdd';
+import Control from '../../components/admin/Control';
+import ModalEdit from '../../components/admin/ModalEdit';
+import { Store } from '../../Store';
 
 export default function ProductAdminPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);

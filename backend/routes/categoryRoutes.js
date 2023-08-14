@@ -22,9 +22,13 @@ categoryRouter.post('/', async (req, res) => {
 
 categoryRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  // console.log(req);
-  const deleteCategory = await Category.findByIdAndDelete(id);
-  res.json(deleteCategory);
+
+  try {
+    const deleteCategory = await Category.findByIdAndDelete(id);
+    res.status(200).json(deleteCategory);
+  } catch (error) {
+    res.status(400).json({message: error})
+  }
 });
 
 export default categoryRouter;
