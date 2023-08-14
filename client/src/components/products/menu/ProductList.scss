@@ -1,0 +1,13 @@
+.row {
+  &_wrap {
+    &_space-around {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+  }
+}
+
+.gap-20 {
+  gap: 20px;
+}

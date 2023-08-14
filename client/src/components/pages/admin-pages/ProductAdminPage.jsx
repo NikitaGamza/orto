@@ -25,7 +25,12 @@ export default function ProductAdminPage() {
     <div>
       <Control visibleAdd={visibleAdd} setVisibleAdd={setVisibleAdd} />
 
-      <ProductAdd visibleAdd={visibleAdd} setVisibleAdd={setVisibleAdd} />
+      <ProductAdd
+        visibleAdd={visibleAdd}
+        setVisibleAdd={setVisibleAdd}
+        onUpdateList={onUpdateList}
+      />
+
       <ModalEdit
         isModalVisible={state.product.isVisibleEditModal}
         setIsModalVisible={onSetIsVisibleEditModal}

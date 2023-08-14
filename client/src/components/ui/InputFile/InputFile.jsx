@@ -2,6 +2,12 @@ import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import './InputFile.scss';
 
+// files //
+// imageUrls
+
+// product.image
+// // del [1], add files
+
 export default function InputFile(props) {
   const { files, setFiles, onRemove, imageUrls, setImageUrls } = props;
 
@@ -44,7 +50,6 @@ export default function InputFile(props) {
           ref={inputFileRef}
           style={{ display: 'none' }}
           type="file"
-          value={files}
           multiple
           onChange={onChangeFileInput}
         />

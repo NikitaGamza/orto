@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import categoryRouter from './routes/categoryRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
@@ -36,6 +37,7 @@ app.use('/static', express.static(publicPath));
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
+app.use('/api/category', categoryRouter);
 
 // app.get('/api/products', (req, res) => {
 //   res.send(data.products); //send data to frontend

@@ -11,7 +11,8 @@ export default function ProductAdd(props) {
 
   const [product, setProduct] = useState({});
 
-  const [files, setFiles, onRemoveFile] = useInputFile();
+  const [files, setFiles, onRemoveFile, imageUrls, setImageUrls] =
+    useInputFile();
 
   const addProduct = async (e) => {
     e.preventDefault();
@@ -98,7 +99,8 @@ export default function ProductAdd(props) {
           value={files}
           setFiles={setFiles}
           onRemove={onRemoveFile}
-          imageUrlsDefault={[]}
+          imageUrls={imageUrls}
+          setImageUrls={setImageUrls}
         />
         {Inputs.map((i) => (
           <Input

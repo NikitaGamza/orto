@@ -58,7 +58,7 @@ export default function CartPage() {
                   <Row className="align-item-center">
                     <Col md={4}>
                       <img
-                        src={item.image[0]}
+                        src={`${item.image[0]}`}
                         alt={item.name}
                         className="img-fluid rounded img-thumbnail"
                       />{' '}

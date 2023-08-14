@@ -56,6 +56,19 @@ export default function ModalEdit(props) {
   };
 
   const updateProduct = async () => {
+    console.log(files);
+
+    console.log(
+      files.map(
+        (item, index) =>
+          `${product.nameProduct}-${product.articul}-${
+            product.image.length + index
+          }`
+      )
+    );
+
+    return;
+
     const body = {
       ...product,
       id: undefined,
@@ -65,11 +78,12 @@ export default function ModalEdit(props) {
       price: Number(product.price),
       rating: Number(product.rating),
       size: Number(product.size),
-      image: product.image.concate(
-        files.map(
-          (item, index) => `${product.nameProduct}-${product.articul}-${index}`
-        )
-      ),
+      // image: product.image.concate(
+      //   files.map(
+      //     (item, index) => `${product.nameProduct}-${product.articul}-${index}`
+      //   )
+      // ),
+      image: product.image,
     };
 
     try {
@@ -118,12 +132,12 @@ export default function ModalEdit(props) {
   const onEdit = () => {
     updateProduct();
 
-    ctxDispatch({
-      type: 'TOGGLE_EDIT_MODAL',
-      payload: false,
-    });
+    // ctxDispatch({
+    //   type: 'TOGGLE_EDIT_MODAL',
+    //   payload: false,
+    // });
 
-    updateList();
+    // updateList();
   };
 
   return (

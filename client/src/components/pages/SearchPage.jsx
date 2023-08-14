@@ -9,7 +9,8 @@ import Rating from '../Rating';
 import Loading from '../Loading';
 import MessageBox from '../MessageBox';
 import Button from 'react-bootstrap/esm/Button';
-import ProductList from '../products/menu/ProductList';
+// import ProductList from '../products/menu/ProductList';
+import ProductItem from '../products/menu/ProductItem';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -248,7 +249,7 @@ export default function SearchPage() {
               <Row>
                 {products.map((product) => (
                   <Col sm={4} lg={5} className="mb-3" key={product._id}>
-                    <ProductList product={product}></ProductList>
+                    <ProductItem product={product}></ProductItem>
                   </Col>
                 ))}
               </Row>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Store } from '../../../Store';
+import { ActionTypes, Store } from '../../../Store';
 
 export default function ProductItem(props) {
   const { product } = props;
@@ -8,7 +8,7 @@ export default function ProductItem(props) {
 
   const getIsVisible = () => state.product.isVisibleEditModal;
 
-  const onEdit = (id) => {
+  const onOpenModalEdit = (id) => {
     const toggleEditModalAction = {
       type: 'TOGGLE_EDIT_MODAL',
       payload: !getIsVisible(),
@@ -22,7 +22,14 @@ export default function ProductItem(props) {
     ctxDispatch(setEditProductId);
   };
 
-  const onRemove = (id) => {};
+  const onRemove = async (id) => {
+    await fetch(`/api/products/${id}`, {
+      method: 'delete',
+    });
+    ctxDispatch({
+      type: ActionTypes.UPDATE_LIST_START,
+    });
+  };
 
   return (
     <div className="control-wrap">
@@ -51,7 +58,7 @@ export default function ProductItem(props) {
             className="control-edit"
             type="button"
             value="Редактировать"
-            onClick={() => onEdit(product._id)}
+            onClick={() => onOpenModalEdit(product._id)}
           />
 
           <input

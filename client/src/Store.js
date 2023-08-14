@@ -22,12 +22,19 @@ const initialState = {
     isVisibleEditModal: false,
     editProductId: null,
     removeProductId: null,
+    isUpdateList: true,
   },
+};
+
+export const ActionTypes = {
+  CART_ADD_ITEM: 'CART_ADD_ITEM',
+  UPDATE_LIST_START: 'UPDATE_LIST_START',
+  UPDATE_LIST_FINISH: 'UPDATE_LIST_FINISH',
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'CART_ADD_ITEM':
+    case ActionTypes.CART_ADD_ITEM:
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
         (item) => item._id === newItem._id
@@ -110,6 +117,23 @@ function reducer(state, action) {
         },
       };
 
+    case ActionTypes.UPDATE_LIST_START:
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          isUpdateList: true,
+        },
+      };
+
+    case ActionTypes.UPDATE_LIST_FINISH:
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          isUpdateList: false,
+        },
+      };
     default:
       return state;
   }

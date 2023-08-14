@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import { Store } from '../../Store';
+import { ActionTypes, Store } from '../../Store';
 
 const useProductFetch = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
-    product: { list, loading, error },
+    product: { list, loading, error, isUpdateList },
   } = state;
-
-  const [isUpdateList, setIsUpdateList] = useState(true);
 
   const productFetch = async () => {
     const actionFetchRequest = {
@@ -41,15 +39,13 @@ const useProductFetch = () => {
   useEffect(() => {
     if (isUpdateList) {
       productFetch();
-      setIsUpdateList(false);
+      ctxDispatch({
+        type: ActionTypes.UPDATE_LIST_FINISH,
+      });
     }
   }, [isUpdateList]);
 
-  const onUpdateList = () => {
-    setIsUpdateList(true);
-  };
-
-  return [list, loading, error, onUpdateList];
+  return [list, loading, error];
 };
 
 export default useProductFetch;

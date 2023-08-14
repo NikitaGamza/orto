@@ -95,6 +95,14 @@ productRouter.get(
   })
 );
 
+productRouter.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const deleteProduct = await Product.findByIdAndDelete(id);
+
+  res.json(deleteProduct);
+});
+
 productRouter.get(
   '/categories',
   expressAsyncHandler(async (req, res) => {

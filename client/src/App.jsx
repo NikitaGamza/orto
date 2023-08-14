@@ -22,6 +22,7 @@ import SearchBox from './components/SearchBox';
 import SearchPage from './components/pages/SearchPage';
 import ProductControl from './components/pages/admin-pages/ProductAdminPage';
 import AdminRoute from './components/AdminRoute';
+import ProductCategory from './components/products/admin/ProductCategory';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -35,18 +36,18 @@ function App() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  // const fetchCatigories = async () => {
-  //   try {
-  //     const { data } = await axios.get(`/api/products/categories`);
-  //     setCategories(data);
-  //   } catch (err) {
-  //     alert(getError(err));
-  //   }
-  // };
+  const fetchCatigories = async () => {
+    try {
+      const { data } = await axios.get(`/api/products/categories`);
+      setCategories(data);
+    } catch (err) {
+      alert(getError(err));
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchCatigories();
-  // }, []);
+  useEffect(() => {
+    fetchCatigories();
+  }, []);
 
   return (
     <BrowserRouter>
@@ -108,6 +109,9 @@ function App() {
                     <LinkContainer to="/admin/product-control">
                       <NavDropdown.Item>Товары</NavDropdown.Item>
                     </LinkContainer>
+                    <LinkContainer to="/admin/product-category">
+                      <NavDropdown.Item>Категории</NavDropdown.Item>
+                    </LinkContainer>
                   </NavDropdown>
                 )}
               </Nav>
@@ -154,6 +158,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <ProductControl />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/product-category"
+                element={
+                  <AdminRoute>
+                    <ProductCategory />
                   </AdminRoute>
                 }
               />

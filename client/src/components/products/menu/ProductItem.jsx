@@ -36,6 +36,7 @@ export default function ProductItem(props) {
             <p className="product__info__name">{product.name}</p>
             {product.size && <p>Размер: {product.size}</p>}
             {product.length && <p>Длинна: {product.length}</p>}
+            {product.category && <p>Категория: {product.category}</p>}
           </strong>
         </Link>
 
