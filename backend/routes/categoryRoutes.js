@@ -27,7 +27,7 @@ categoryRouter.delete('/:id', async (req, res) => {
     const deleteCategory = await Category.findByIdAndDelete(id);
     res.status(200).json(deleteCategory);
   } catch (error) {
-    res.status(400).json({message: error})
+    res.status(400).json({ message: error });
   }
 });
 

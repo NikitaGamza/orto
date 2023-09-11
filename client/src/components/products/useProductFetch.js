@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { ActionTypes, Store } from '../../Store';
+import { getProducts } from '../../api/product';
 
 const useProductFetch = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -17,16 +18,11 @@ const useProductFetch = () => {
     ctxDispatch(actionFetchRequest);
 
     try {
-      const productsResponse = await fetch('/api/products', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const products = await productsResponse.json();
+      const { data } = await getProducts();
+
       const fetchSuccessAction = {
         type: 'FETCH_PRODUCT_SUCCESS',
-        payload: products,
+        payload: data,
       };
       ctxDispatch(fetchSuccessAction);
     } catch (err) {

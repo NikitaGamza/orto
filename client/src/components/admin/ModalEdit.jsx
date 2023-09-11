@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import ModalWindow from './ModalWindow/ModalWindow';
-import { Store } from '../../Store';
+import { ActionTypes, Store } from '../../Store';
 import Input from './Input';
 import InputFile from '../ui/InputFile/InputFile';
 import useInputFile from '../ui/InputFile/useInputFile';
+import InputPrice from '../ui/InputFile/InputPrice';
+import New from './New';
 
 export default function ModalEdit(props) {
   const { isModalVisible, setIsModalVisible, updateList } = props;
@@ -30,6 +32,22 @@ export default function ModalEdit(props) {
 
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [priceList, setPriceList] = useState([{ price: 100, size: 10 }]);
+  useEffect(() => {
+    setProduct({
+      ...product,
+      prices: priceList.map((item) => ({ price: item.price, size: item.size })),
+    });
+    // console.log(priceList);
+    // console.log(product);
+  }, [priceList]);
+
+  useEffect(() => {
+    if (product) {
+      // setPriceList(product.prices);
+      console.log(product);
+    }
+  }, [product]);
 
   const getProductById = async (id) => {
     setIsLoading(true);
@@ -48,6 +66,8 @@ export default function ModalEdit(props) {
         id: data._id,
       };
       setProduct(mappedData);
+
+      setPriceList(mappedData.prices);
 
       setIsLoading(false);
     } catch (error) {
@@ -137,7 +157,8 @@ export default function ModalEdit(props) {
     //   payload: false,
     // });
 
-    // updateList();
+    ctxDispatch({ type: ActionTypes.UPDATE_LIST_START });
+    setIsModalVisible(false);
   };
 
   return (
@@ -147,14 +168,6 @@ export default function ModalEdit(props) {
         setIsVisible={setIsModalVisible}
       >
         <h1>Редактирование</h1>
-
-        <button
-          onClick={() => {
-            console.log(product);
-          }}
-        >
-          1
-        </button>
 
         <InputFile
           files={files}
@@ -172,7 +185,7 @@ export default function ModalEdit(props) {
             propName={i.propName}
           />
         ))}
-
+        <InputPrice priceList={priceList} setPriceList={setPriceList} />
         <button
           onClick={() => {
             onEdit();

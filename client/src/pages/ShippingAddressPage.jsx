@@ -20,6 +20,10 @@ export default function ShippingAddressPage() {
     shippingAddress.postalCode || ''
   );
   const [country, setCountry] = useState(shippingAddress.country || '');
+  const [email, setEmail] = useState(shippingAddress.email || '');
+  const [phoneNumber, setPhoneNumber] = useState(
+    shippingAddress.phoneNumber || ''
+  );
   useEffect(() => {
     if (!userInfo) {
       navigate('/signin?redirect=/shipping');
@@ -35,6 +39,8 @@ export default function ShippingAddressPage() {
         city,
         postalCode,
         country,
+        email,
+        phoneNumber,
       },
     });
     localStorage.setItem(
@@ -45,6 +51,8 @@ export default function ShippingAddressPage() {
         city,
         postalCode,
         country,
+        email,
+        phoneNumber,
       })
     );
     navigate('/payment');
@@ -95,6 +103,22 @@ export default function ShippingAddressPage() {
             <Form.Control
               value={country}
               onChange={(e) => setCountry(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="phoneNumber">
+            <Form.Label>Телефон</Form.Label>
+            <Form.Control
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               required
             />
           </Form.Group>

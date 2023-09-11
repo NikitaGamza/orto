@@ -1,15 +1,16 @@
-import { Route, Routes } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import CartPage from "../pages/CartPage";
-import SearchPage from "../pages/SearchPage";
-import SigninPage from "../pages/SigninPage";
-import SignupPage from "../pages/SignupPage";
-import ShippingAddressPage from "../pages/ShippingAddressPage";
-import PaymentPage from "../pages/PaymentPage";
-import ProductAdminPage from "../pages/ProductPage";
-import ProductControl from "../pages/admin-pages/ProductAdminPage";
-import AdminRoute from "./AdminRoute";
-import ProductCategory from "../components/admin/ProductCategory";
+import { Route, Routes } from 'react-router-dom';
+import HomePage from '../pages/HomePage';
+import CartPage from '../pages/CartPage';
+import SearchPage from '../pages/SearchPage';
+import SigninPage from '../pages/SigninPage';
+import SignupPage from '../pages/SignupPage';
+import ShippingAddressPage from '../pages/ShippingAddressPage';
+import PaymentPage from '../pages/PaymentPage';
+import ProductAdminPage from '../pages/ProductPage';
+import ProductControl from '../pages/admin-pages/ProductAdminPage';
+import AdminRoute from './AdminRoute';
+import ProductCategory from '../components/admin/ProductCategory';
+import ProductOrders from '../components/admin/ProductOrders';
 
 export default function Routing() {
   return (
@@ -41,6 +42,14 @@ export default function Routing() {
           </AdminRoute>
         }
       />
+      <Route
+        path="/admin/product-orders"
+        element={
+          <AdminRoute>
+            <ProductOrders />
+          </AdminRoute>
+        }
+      />
     </Routes>
-  )
+  );
 }

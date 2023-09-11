@@ -7,6 +7,7 @@ import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import categoryRouter from './routes/categoryRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import orderRouter from './routes/orderRoutes.js';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 
@@ -38,6 +39,7 @@ app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/category', categoryRouter);
+app.use('/api/orders', orderRouter);
 
 // app.get('/api/products', (req, res) => {
 //   res.send(data.products); //send data to frontend

@@ -2,15 +2,14 @@ import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
-    image: { type: Array, required: true, unique: false },
+    image: { type: Array, unique: false },
     name: { type: String, required: false, unique: false },
     slug: { type: String, required: true, unique: true },
     categoryId: { type: mongoose.Schema.Types.ObjectId },
     articul: { type: String, required: true, unique: false },
-    size: { type: String, required: false, unique: false },
-    color: { type: Array, required: true, unique: false },
-    length: { type: String, required: false, unique: false },
-    price: { type: Number, required: true, unique: false },
+    color: { type: Array, required: false, unique: false },
+    length: { type: Array, required: false, unique: false },
+    prices: { type: Array, required: true, unique: false },
     brand: { type: String, required: true, unique: false },
     country: { type: String, required: true, unique: false },
     rating: { type: Number, required: false, unique: false },

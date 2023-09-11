@@ -1,54 +1,64 @@
-import React, { useRef, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/esm/Button';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Input from './Input';
 import ModalWindow from './ModalWindow/ModalWindow';
 import InputFile from '../ui/InputFile/InputFile';
 import useInputFile from '../ui/InputFile/useInputFile';
+import { getProductCategory } from '../../api/category';
+import { uploadFile } from '../../api/product';
+import { ActionTypes, Store } from '../../Store';
+import InputPrice from '../ui/InputFile/InputPrice';
+import { InputType } from '../generator/InputTypes.enum';
+import InputGenerator from '../generator/InputGenerator';
+
+const addProductFetch = async (body) => {
+  const response = await fetch('/api/products/addproduct', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body,
+  });
+  return await response.json();
+};
 
 export default function ProductAdd(props) {
+  const { dispatch: ctxDispatch } = useContext(Store);
   const { visibleAdd, setVisibleAdd } = props;
+
+  const [category, setCategory] = useState([]);
+
+  const [priceList, setPriceList] = useState([{ price: 0, size: '' }]);
 
   const [product, setProduct] = useState({});
 
   const [files, setFiles, onRemoveFile, imageUrls, setImageUrls] =
     useInputFile();
 
-  const addProduct = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const handler = async () => {
+      const { data } = await getProductCategory();
+      console.log(data);
+      setCategory(data);
+    };
+    handler();
+  }, []);
 
+  useEffect(() => {
+    setProduct({
+      ...product,
+      prices: priceList.map((item) => ({ price: item.price, size: item.size })),
+    });
+    console.log(priceList);
+    console.log(product);
+  }, [priceList]);
+
+  const addProduct = async () => {
     files.forEach(async (file, index) => {
-      const formData = new FormData();
-
-      formData.append('images', file);
-
-      formData.append(
-        'names',
+      await uploadFile(
+        file,
         `${product.nameProduct}-${product.articul}-${index}`
       );
-
-      await fetch('/api/products/upload', {
-        method: 'POST',
-        body: formData,
-      }).catch((error) => console.error(error));
     });
-
-    // const {slug, category, articul, nameProduct, size, color, length, brand, country, description, price} = product
-
-    // const newProduct = {
-    //   image: files.map((item, index) => `${nameProduct}-${articul}-${index}`),
-    //   name: nameProduct,
-    //   slug,
-    //   category,
-    //   articul,
-    //   size,
-    //   color: color.split(',').map((i) => i.trim()),
-    //   length,
-    //   price: Number(price),
-    //   brand,
-    //   country,
-    //   description,
-    // };
 
     const productClone = product;
     productClone.image = files.map(
@@ -56,40 +66,39 @@ export default function ProductAdd(props) {
         `${productClone.nameProduct}-${productClone.articul}-${index}`
     );
     productClone.name = productClone.nameProduct;
-    productClone.color = productClone.color.split(',').map((i) => i.trim());
+    productClone.color =
+      productClone.color.length &&
+      productClone.color.length !== 0 &&
+      productClone.color.split(',').map((i) => i.trim());
+    productClone.length =
+      product.length.length &&
+      productClone.length.length !== 0 &&
+      productClone.length.split(',').map((i) => i.trim());
     productClone.price = Number(productClone.price);
+    productClone.numReviews = 0;
 
     const body = JSON.stringify(productClone);
+    await addProductFetch(body);
 
-    try {
-      const response = await fetch('/api/products/addproduct', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body,
-      });
+    setVisibleAdd(false);
+    ctxDispatch({
+      type: ActionTypes.UPDATE_LIST_START,
+    });
 
-      const data = await response.json();
-
-      setVisibleAdd(false);
-    } catch (error) {
-      console.error(error.message);
-    }
+    console.log(2);
   };
 
   const Inputs = [
-    { title: 'Наименование', propName: 'nameProduct' },
-    { title: 'Ссылка', propName: 'slug' },
-    { title: 'Категория', propName: 'category' },
-    { title: 'Цена', propName: 'price' },
-    { title: 'Длинна', propName: 'length' },
-    { title: 'Размер', propName: 'size' },
-    { title: 'Артикул', propName: 'articul' },
-    { title: 'Производитель', propName: 'brand' },
-    { title: 'Цвет', propName: 'color' },
-    { title: 'Страна', propName: 'country' },
-    { title: 'Описание', propName: 'description' },
+    { title: 'Наименование', propName: 'nameProduct', type: InputType.text },
+    { title: 'Ссылка', propName: 'slug', type: InputType.text },
+    // { title: 'Цена', propName: 'price' },
+    { title: 'Длинна', propName: 'length', type: InputType.text },
+    // { title: 'Размер', propName: 'size' },
+    { title: 'Артикул', propName: 'articul', type: InputType.text },
+    { title: 'Производитель', propName: 'brand', type: InputType.text },
+    { title: 'Цвет', propName: 'color', type: InputType.text },
+    { title: 'Страна', propName: 'country', type: InputType.text },
+    { title: 'Описание', propName: 'description', type: InputType.textarea },
   ];
 
   return (
@@ -102,21 +111,28 @@ export default function ProductAdd(props) {
           imageUrls={imageUrls}
           setImageUrls={setImageUrls}
         />
+        <select
+          onChange={(e) =>
+            setProduct({ ...product, categoryId: e.target.value })
+          }
+        >
+          {category &&
+            category.map((item) => (
+              <option value={item._id}>{item.name}</option>
+            ))}
+        </select>
         {Inputs.map((i) => (
-          <Input
+          <InputGenerator
             title={i.title}
-            setProduct={setProduct}
-            product={product}
+            setter={setProduct}
+            getter={product}
             propName={i.propName}
+            type={i.type}
           />
         ))}
-
-        <Button type="submit" onClick={(e) => addProduct(e)}>
-          Добавить
-        </Button>
-        <Button type="button" onClick={() => setVisibleAdd(false)}>
-          Отменить
-        </Button>
+        <InputPrice priceList={priceList} setPriceList={setPriceList} />
+        <button onClick={addProduct}>Добавить</button>
+        <button onClick={() => setVisibleAdd(false)}>Отменить</button>
       </div>
     </ModalWindow>
   );

@@ -1,8 +1,8 @@
-import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
+import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
 
 export default function SideBar(props) {
-  const {categories, sidebarIsOpen, setSidebarIsOpen} = props
+  const { categories, sidebarIsOpen, setSidebarIsOpen } = props;
 
   return (
     <div
@@ -18,16 +18,16 @@ export default function SideBar(props) {
         </Nav.Item>
 
         {categories.map((category) => (
-          <Nav.Item key={category}>
+          <Nav.Item key={category._id}>
             <Link
-              to={`/search?category=${category}`}
+              to={`/search?category=${category.name}`}
               onClick={() => setSidebarIsOpen(false)}
             >
-              <p className="cat-link">{category}</p>
+              <p className="cat-link">{category.name}</p>
             </Link>
           </Nav.Item>
         ))}
       </Nav>
     </div>
-  )
+  );
 }

@@ -12,7 +12,7 @@ export default function ProductAdminPage() {
 
   const [visibleAdd, setVisibleAdd] = useState(false);
 
-  const [products, loading, error, onUpdateList] = useProductFetch();
+  const [products, loading, error] = useProductFetch();
 
   const onSetIsVisibleEditModal = (value) => {
     ctxDispatch({
@@ -25,16 +25,11 @@ export default function ProductAdminPage() {
     <div>
       <Control visibleAdd={visibleAdd} setVisibleAdd={setVisibleAdd} />
 
-      <ProductAdd
-        visibleAdd={visibleAdd}
-        setVisibleAdd={setVisibleAdd}
-        onUpdateList={onUpdateList}
-      />
+      <ProductAdd visibleAdd={visibleAdd} setVisibleAdd={setVisibleAdd} />
 
       <ModalEdit
         isModalVisible={state.product.isVisibleEditModal}
         setIsModalVisible={onSetIsVisibleEditModal}
-        updateList={onUpdateList}
       />
 
       <ProductList products={products} loading={loading} error={error} />

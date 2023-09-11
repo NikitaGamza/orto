@@ -19,7 +19,7 @@ const initialState = {
     detail: {
       product: null,
       loading: true,
-      error: ''
+      error: '',
     },
     loading: false,
     list: null,
@@ -35,37 +35,70 @@ export const ActionTypes = {
   CART_ADD_ITEM: 'CART_ADD_ITEM',
   UPDATE_LIST_START: 'UPDATE_LIST_START',
   UPDATE_LIST_FINISH: 'UPDATE_LIST_FINISH',
+  CART_REMOVE_ITEM: 'CART_REMOVE_ITEM',
+  CART_DECREASE_ITEM: 'CART_DECREASE_ITEM',
+  CART_INCREASE_ITEM: 'CART_INCREASE_ITEM',
 
   // Product details
   FETCH_SUCCESS_PRODUCT_DETAILS: 'FETCH_SUCCESS_PRODUCT_DETAILS',
   FETCH_FAIL_PRODUCT_DETAILS: 'FETCH_FAIL_PRODUCT_DETAILS',
   FETCH_REQUEST_PRODUCT_DETAILS: 'FETCH_REQUEST_PRODUCT_DETAILS',
-
 };
 
 function reducer(state, action) {
+  const counterCartItems = (quantity) =>
+    state.cart.cartItems.map((i) => {
+      if (
+        i._id === action.payload._id &&
+        i.size === action.payload.size &&
+        i.color === action.payload.color
+      ) {
+        return { ...i, quantity: i.quantity + quantity };
+      }
+      return i;
+    });
+
   switch (action.type) {
     case ActionTypes.CART_ADD_ITEM:
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
-        (item) => item._id === newItem._id
+        (item) =>
+          item._id === newItem._id &&
+          item.size === newItem.size &&
+          item.color === newItem.color
       );
 
-      const quantity = existItem ? existItem.quantity + 1 : 1;
-      newItem.quantity = quantity
+      if (existItem) {
+        return { ...state };
+      }
 
-      const cartItems = existItem
-        ? state.cart.cartItems.map((item) =>
-            item._id === existItem._id ? newItem : item
-          )
-        : [...state.cart.cartItems, newItem];
+      newItem.quantity = 1;
+
+      const cartItems = [...state.cart.cartItems, newItem];
+
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
       return { ...state, cart: { ...state.cart, cartItems } };
 
+    case ActionTypes.CART_INCREASE_ITEM:
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: counterCartItems(1) },
+      };
+
+    case ActionTypes.CART_DECREASE_ITEM:
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: counterCartItems(-1) },
+      };
+
     //add to cart
-    case 'CART_REMOVE_ITEM': {
+    case ActionTypes.CART_REMOVE_ITEM: {
       const cartItems = state.cart.cartItems.filter(
-        (item) => item._id !== action.payload._id
+        (item) =>
+          item._id !== action.payload._id ||
+          item.size !== action.payload.size ||
+          item.color !== action.payload.color
       );
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
@@ -158,11 +191,10 @@ function reducer(state, action) {
           ...state.product,
           detail: {
             ...state.product.details,
-            loading: true
-          }
-        }
-      }
-
+            loading: true,
+          },
+        },
+      };
 
     case ActionTypes.FETCH_SUCCESS_PRODUCT_DETAILS:
       return {
@@ -172,10 +204,10 @@ function reducer(state, action) {
           detail: {
             ...state.product.details,
             product: action.payload,
-            loading: false
-          }
-        }
-      }
+            loading: false,
+          },
+        },
+      };
 
     case ActionTypes.FETCH_FAIL_PRODUCT_DETAILS:
       return {
@@ -184,11 +216,10 @@ function reducer(state, action) {
           ...state.product,
           detail: {
             ...state.product.details,
-            error: action.payload
-          }
-        }
-      }
-
+            error: action.payload,
+          },
+        },
+      };
 
     default:
       return state;
