@@ -80,61 +80,60 @@ export default function ProductOrders() {
   return (
     <div>
       <h1>Заказы</h1>
-      {orderList !== [] &&
-        orderList.map((item) => (
-          <div className="order">
-            <div className="order__client">
-              <span>{item.clientFIO}</span>
-              <span>{item.clientCountry}</span>
-              <span>{item.clientCity}</span>
-              <span>{item.clientAddress}</span>
-              <span>{item.clientPostalCode}</span>
-              <span>{item.clientEmail}</span>
-              <span>{item.clientPhone}</span>
-            </div>
-            {item.orderList.map((productItem) => (
-              <div className="order__product">
-                <span>{productItem.name}</span>
-                <span>{productItem.size}</span>
-                <span>{productItem.length}</span>
-                <span>{productItem.color}</span>
-                <span>{productItem.articul}</span>
-                <span>{productItem.price}</span>
-                <span>{productItem.quantity}</span>
-                <span>{productItem.slug}</span>
-              </div>
-            ))}
-            <div className="order__settings">
-              <span>
-                <input
-                  onChange={() => takeOrder(item._id)}
-                  type="checkbox"
-                  checked={item.isTaken}
-                />
-                <label>
-                  {item.isTaken
-                    ? 'Взят на рассмотрение'
-                    : 'Не взят на рассмотрение'}
-                </label>
-              </span>
-              <span>
-                <input
-                  type="checkbox"
-                  checked={item.isDone}
-                  onChange={() => doneOrder(item._id)}
-                />
-                <label>{item.isDone ? 'Выполнен' : 'Не выполнен'}</label>
-              </span>
-              <button
-                onClick={() => deleteOrder(item._id)}
-                className="order__settings__delete"
-              >
-                Удалить
-              </button>
-            </div>
-            {/* <OrderItem item={item} /> */}
+      {orderList.map((item) => (
+        <div className="order">
+          <div className="order__client">
+            <span>{item.clientFIO}</span>
+            <span>{item.clientCountry}</span>
+            <span>{item.clientCity}</span>
+            <span>{item.clientAddress}</span>
+            <span>{item.clientPostalCode}</span>
+            <span>{item.clientEmail}</span>
+            <span>{item.clientPhone}</span>
           </div>
-        ))}
+          {item.orderList.map((productItem) => (
+            <div className="order__product">
+              <span>{productItem.name}</span>
+              <span>{productItem.size}</span>
+              <span>{productItem.length}</span>
+              <span>{productItem.color}</span>
+              <span>{productItem.articul}</span>
+              <span>{productItem.price}</span>
+              <span>{productItem.quantity}</span>
+              <span>{productItem.slug}</span>
+            </div>
+          ))}
+          <div className="order__settings">
+            <span>
+              <input
+                onChange={() => takeOrder(item._id)}
+                type="checkbox"
+                checked={item.isTaken}
+              />
+              <label>
+                {item.isTaken
+                  ? 'Взят на рассмотрение'
+                  : 'Не взят на рассмотрение'}
+              </label>
+            </span>
+            <span>
+              <input
+                type="checkbox"
+                checked={item.isDone}
+                onChange={() => doneOrder(item._id)}
+              />
+              <label>{item.isDone ? 'Выполнен' : 'Не выполнен'}</label>
+            </span>
+            <button
+              onClick={() => deleteOrder(item._id)}
+              className="order__settings__delete"
+            >
+              Удалить
+            </button>
+          </div>
+          {/* <OrderItem item={item} /> */}
+        </div>
+      ))}
     </div>
   );
 }

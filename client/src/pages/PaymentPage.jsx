@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { useContext } from 'react';
-import { Store } from '../Store';
+import { ActionTypes, Store } from '../Store';
+import { useNavigate } from 'react-router-dom';
 
 export default function PaymentPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -13,7 +14,7 @@ export default function PaymentPage() {
   //   console.log(cartItems);
   //   localStorage.removeItem('cartItems');
   // }, []);
-
+  const navigate = useNavigate();
   const addOrderFetch = async () => {
     const completeOrder = {};
     completeOrder.orderList = [...cartItems];
@@ -35,7 +36,10 @@ export default function PaymentPage() {
       },
       body,
     });
-    // localStorage.setItem('cartItems', []); //how to clean
+
+    localStorage.removeItem('cartItems'); //how to clean
+    ctxDispatch({ type: ActionTypes.CLEAR_CART });
+    navigate('/');
     return await response.json();
   };
 

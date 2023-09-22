@@ -20,6 +20,7 @@ export default function ProductItem(props) {
     };
     ctxDispatch(toggleEditModalAction);
     ctxDispatch(setEditProductId);
+    console.log('toggled:', product);
   };
 
   const onRemove = async (id) => {
@@ -45,7 +46,6 @@ export default function ProductItem(props) {
           <div>{product.name}</div>
           {product.size && <div>Размер: {product.size} </div>}
           {product.length && <div>Длинна: {product.length}</div>}
-          <div>Цена: {product.price} руб</div>
           <div>Производитель: {product.brand}</div>
           <div>Страна: {product.country}</div>
           <div>Описание: {product.description}</div>

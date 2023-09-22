@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { ActionTypes, Store } from '../../Store';
 import { getProducts } from '../../api/product';

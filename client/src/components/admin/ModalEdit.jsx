@@ -5,14 +5,15 @@ import Input from './Input';
 import InputFile from '../ui/InputFile/InputFile';
 import useInputFile from '../ui/InputFile/useInputFile';
 import InputPrice from '../ui/InputFile/InputPrice';
-import New from './New';
+import InputDropdown from './InputDropdown';
+import { getProductCategory } from '../../api/category';
 
 export default function ModalEdit(props) {
   const { isModalVisible, setIsModalVisible, updateList } = props;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const [isVisible, setIsVisible] = useState(true);
-
+  const [category, setCategory] = useState();
   const [files, setFiles, onRemoveFile, imageUrls, setImageUrls] =
     useInputFile();
 
@@ -49,6 +50,15 @@ export default function ModalEdit(props) {
     }
   }, [product]);
 
+  useEffect(() => {
+    const handler = async () => {
+      const { data } = await getProductCategory();
+      console.log(data);
+      setCategory(data);
+    };
+    handler();
+  }, []);
+
   const getProductById = async (id) => {
     setIsLoading(true);
     try {
@@ -75,52 +85,60 @@ export default function ModalEdit(props) {
     }
   };
 
-  const updateProduct = async () => {
-    console.log(files);
+  useEffect(() => {
+    console.log(this);
+  }, []);
 
-    console.log(
-      files.map(
-        (item, index) =>
-          `${product.nameProduct}-${product.articul}-${
-            product.image.length + index
-          }`
-      )
-    );
+  const updateProduct = async () => {
+    // console.log(files);
+
+    // console.log(
+    //   files.map(
+    //     (item, index) =>
+    //       `${product.nameProduct}-${product.articul}-${
+    //         product.image.length + index
+    //       }`
+    //   )
+    // );
+
+    console.log('edited');
 
     return;
 
-    const body = {
-      ...product,
-      id: undefined,
-      nameProduct: undefined,
-      name: product.nameProduct,
-      color: product.color.split(',').map((i) => i.trim()),
-      price: Number(product.price),
-      rating: Number(product.rating),
-      size: Number(product.size),
-      // image: product.image.concate(
-      //   files.map(
-      //     (item, index) => `${product.nameProduct}-${product.articul}-${index}`
-      //   )
-      // ),
-      image: product.image,
-    };
+    // const body = {
+    //   ...product,
+    //   id: undefined,
+    //   nameProduct: undefined,
+    //   name: product.nameProduct,
+    //   color: product.color.split(',').map((i) => i.trim()),
+    //   price: Number(product.price),
+    //   rating: Number(product.rating),
+    //   size: Number(product.size),
+    //   // image: product.image.concate(
+    //   //   files.map(
+    //   //     (item, index) => `${product.nameProduct}-${product.articul}-${index}`
+    //   //   )
+    //   // ),
+    //   image: product.image,
+    // };
 
-    try {
-      await fetch('/api/products/', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-    } catch {
-      console.log('error');
-    }
+    // try {
+    //   await fetch('/api/products/', {
+    //     method: 'PUT',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(body),
+    //   });
+    // } catch {
+    //   console.log('error');
+    // }
   };
 
   useEffect(() => {
+    console.log(state.product);
     if (state.product.isVisibleEditModal) {
+      console.log(state.product.editProductId);
       getProductById(state.product.editProductId);
     }
   }, [state.product.isVisibleEditModal]);
@@ -139,9 +157,7 @@ export default function ModalEdit(props) {
     { title: 'Наименование', propName: 'nameProduct' },
     { title: 'Ссылка', propName: 'slug' },
     { title: 'Категория', propName: 'category' },
-    { title: 'Цена', propName: 'price' },
     { title: 'Длинна', propName: 'length' },
-    { title: 'Размер', propName: 'size' },
     { title: 'Артикул', propName: 'articul' },
     { title: 'Производитель', propName: 'brand' },
     { title: 'Цвет', propName: 'color' },
@@ -177,14 +193,16 @@ export default function ModalEdit(props) {
           setImageUrls={setImageUrls}
         />
 
-        {Inputs.map((i) => (
-          <Input
-            title={i.title}
-            product={product}
-            setProduct={setProduct}
-            propName={i.propName}
-          />
-        ))}
+        {Inputs.map((i) => {
+          return (
+            <Input
+              title={i.title}
+              product={product}
+              setProduct={setProduct}
+              propName={i.propName}
+            />
+          );
+        })}
         <InputPrice priceList={priceList} setPriceList={setPriceList} />
         <button
           onClick={() => {

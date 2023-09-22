@@ -4,7 +4,7 @@ import Input from '../admin/Input';
 import InputTextarea from '../admin/InputTextarea';
 
 export default function InputGenerator(props) {
-  const { title, propName, type, getter, setter } = props;
+  const { title, propName, type, getter, setter, product } = props;
 
   const setterOverwrited = (propName, value) => {
     setter((prevValue) => ({ ...prevValue, [propName]: value }));
@@ -13,10 +13,11 @@ export default function InputGenerator(props) {
   switch (type) {
     case InputType.text:
       return (
+        // ТУТ ОШИБКА
         <Input
           title={title}
-          getter={getter}
-          setter={setterOverwrited}
+          product={product}
+          setProduct={setterOverwrited}
           propName={propName}
         />
       );

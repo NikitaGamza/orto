@@ -32,6 +32,7 @@ function App() {
       console.log(data);
 
       setCategories(data);
+      // Store.ActionTypes.FETCH_CATEGORIES(data);
     } catch (err) {
       alert(getError(err));
     }

@@ -1,4 +1,5 @@
 import { createContext, useReducer } from 'react';
+import { getProductCategory } from './api/category.js';
 
 export const Store = createContext();
 
@@ -14,7 +15,7 @@ const initialState = {
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
   },
-
+  catehories: [],
   product: {
     detail: {
       product: null,
@@ -43,9 +44,12 @@ export const ActionTypes = {
   FETCH_SUCCESS_PRODUCT_DETAILS: 'FETCH_SUCCESS_PRODUCT_DETAILS',
   FETCH_FAIL_PRODUCT_DETAILS: 'FETCH_FAIL_PRODUCT_DETAILS',
   FETCH_REQUEST_PRODUCT_DETAILS: 'FETCH_REQUEST_PRODUCT_DETAILS',
+  FETCH_CATEGORIES: 'FETCH_CATEGORIES',
+  CLEAR_CART: 'CLEAR_CART',
 };
 
 function reducer(state, action) {
+  console.log(action);
   const counterCartItems = (quantity) =>
     state.cart.cartItems.map((i) => {
       if (
@@ -218,6 +222,14 @@ function reducer(state, action) {
             ...state.product.details,
             error: action.payload,
           },
+        },
+      };
+
+    case ActionTypes.CLEAR_CART:
+      return {
+        ...state,
+        cart: {
+          cartItems: [],
         },
       };
 

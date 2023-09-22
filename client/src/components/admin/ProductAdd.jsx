@@ -61,39 +61,31 @@ export default function ProductAdd(props) {
     });
 
     const productClone = product;
-    productClone.image = files.map(
-      (item, index) =>
-        `${productClone.nameProduct}-${productClone.articul}-${index}`
-    );
-    productClone.name = productClone.nameProduct;
-    productClone.color =
-      productClone.color.length &&
-      productClone.color.length !== 0 &&
-      productClone.color.split(',').map((i) => i.trim());
-    productClone.length =
-      product.length.length &&
-      productClone.length.length !== 0 &&
-      productClone.length.split(',').map((i) => i.trim());
-    productClone.price = Number(productClone.price);
-    productClone.numReviews = 0;
+    // productClone.image = files.map(
+    //   (item, index) =>
+    //     `${productClone.nameProduct}-${productClone.articul}-${index}`
+    // );
+    // productClone.name = productClone.nameProduct;
+    // productClone.color = productClone.color.split(',').map((i) => i.trim());
+    // productClone.length = productClone.length.split(',').map((i) => i.trim());
+    // productClone.price = Number(productClone.price);
+    // productClone.numReviews = 0;
 
-    const body = JSON.stringify(productClone);
-    await addProductFetch(body);
+    // const body = JSON.stringify(productClone);
+    // await addProductFetch(body);
 
-    setVisibleAdd(false);
-    ctxDispatch({
-      type: ActionTypes.UPDATE_LIST_START,
-    });
+    // setVisibleAdd(false);
+    // ctxDispatch({
+    //   type: ActionTypes.UPDATE_LIST_START,
+    // });
 
-    console.log(2);
+    console.log(productClone);
   };
 
   const Inputs = [
     { title: 'Наименование', propName: 'nameProduct', type: InputType.text },
     { title: 'Ссылка', propName: 'slug', type: InputType.text },
-    // { title: 'Цена', propName: 'price' },
     { title: 'Длинна', propName: 'length', type: InputType.text },
-    // { title: 'Размер', propName: 'size' },
     { title: 'Артикул', propName: 'articul', type: InputType.text },
     { title: 'Производитель', propName: 'brand', type: InputType.text },
     { title: 'Цвет', propName: 'color', type: InputType.text },
