@@ -13,12 +13,12 @@ export default function InputGenerator(props) {
   switch (type) {
     case InputType.text:
       return (
-        // ТУТ ОШИБКА
         <Input
           title={title}
           product={product}
           setProduct={setterOverwrited}
           propName={propName}
+          type={propName === 'price' ? 'number' : 'text'}
         />
       );
     case InputType.textarea:

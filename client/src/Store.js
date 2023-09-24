@@ -44,7 +44,9 @@ export const ActionTypes = {
   FETCH_SUCCESS_PRODUCT_DETAILS: 'FETCH_SUCCESS_PRODUCT_DETAILS',
   FETCH_FAIL_PRODUCT_DETAILS: 'FETCH_FAIL_PRODUCT_DETAILS',
   FETCH_REQUEST_PRODUCT_DETAILS: 'FETCH_REQUEST_PRODUCT_DETAILS',
+
   FETCH_CATEGORIES: 'FETCH_CATEGORIES',
+
   CLEAR_CART: 'CLEAR_CART',
 };
 
@@ -98,6 +100,7 @@ function reducer(state, action) {
 
     //add to cart
     case ActionTypes.CART_REMOVE_ITEM: {
+      // const cartItems = state.cart.cartItems.filter(filterCartItems())
       const cartItems = state.cart.cartItems.filter(
         (item) =>
           item._id !== action.payload._id ||

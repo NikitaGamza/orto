@@ -7,16 +7,17 @@ import useInputFile from '../ui/InputFile/useInputFile';
 import InputPrice from '../ui/InputFile/InputPrice';
 import InputDropdown from './InputDropdown';
 import { getProductCategory } from '../../api/category';
+import InputGenerator from "../generator/InputGenerator";
+import {InputType} from "../generator/InputTypes.enum";
 
 export default function ModalEdit(props) {
-  const { isModalVisible, setIsModalVisible, updateList } = props;
+  const { isModalVisible, setIsModalVisible, updateList, setter } = props;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const [isVisible, setIsVisible] = useState(true);
   const [category, setCategory] = useState();
   const [files, setFiles, onRemoveFile, imageUrls, setImageUrls] =
     useInputFile();
-
   const getIsVisibleEditModal = () => state.product.isVisibleEditModal;
 
   const onCloseModal = () => {
@@ -154,17 +155,15 @@ export default function ModalEdit(props) {
   }, [isLoading]);
 
   const Inputs = [
-    { title: 'Наименование', propName: 'nameProduct' },
-    { title: 'Ссылка', propName: 'slug' },
-    { title: 'Категория', propName: 'category' },
-    { title: 'Длинна', propName: 'length' },
-    { title: 'Артикул', propName: 'articul' },
-    { title: 'Производитель', propName: 'brand' },
-    { title: 'Цвет', propName: 'color' },
-    { title: 'Страна', propName: 'country' },
-    { title: 'Описание', propName: 'description' },
+    { title: 'Наименование', propName: 'nameProduct', type: InputType.text },
+    { title: 'Ссылка', propName: 'slug', type: InputType.text },
+    { title: 'Длинна', propName: 'length', type: InputType.text },
+    { title: 'Артикул', propName: 'articul', type: InputType.text },
+    { title: 'Производитель', propName: 'brand', type: InputType.text },
+    { title: 'Цвет', propName: 'color', type: InputType.text },
+    { title: 'Страна', propName: 'country', type: InputType.text },
+    { title: 'Описание', propName: 'description', type: InputType.textarea },
   ];
-
   const onEdit = () => {
     updateProduct();
 
@@ -195,11 +194,13 @@ export default function ModalEdit(props) {
 
         {Inputs.map((i) => {
           return (
-            <Input
+            <InputGenerator
               title={i.title}
+              setter={setProduct}
+              getter={product}
               product={product}
-              setProduct={setProduct}
               propName={i.propName}
+              type={i.type}
             />
           );
         })}

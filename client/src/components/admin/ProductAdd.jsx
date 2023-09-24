@@ -48,8 +48,6 @@ export default function ProductAdd(props) {
       ...product,
       prices: priceList.map((item) => ({ price: item.price, size: item.size })),
     });
-    console.log(priceList);
-    console.log(product);
   }, [priceList]);
 
   const addProduct = async () => {
@@ -61,25 +59,24 @@ export default function ProductAdd(props) {
     });
 
     const productClone = product;
-    // productClone.image = files.map(
-    //   (item, index) =>
-    //     `${productClone.nameProduct}-${productClone.articul}-${index}`
-    // );
-    // productClone.name = productClone.nameProduct;
-    // productClone.color = productClone.color.split(',').map((i) => i.trim());
-    // productClone.length = productClone.length.split(',').map((i) => i.trim());
-    // productClone.price = Number(productClone.price);
-    // productClone.numReviews = 0;
+    productClone.image = files.map(
+      (item, index) =>
+        `${productClone.nameProduct}-${productClone.articul}-${index}`
+    );
+    productClone.name = productClone.nameProduct;
+    productClone.color = productClone.color.split(',').map((i) => i.trim());
+    productClone.length = productClone.length.split(',').map((i) => i.trim());
+    productClone.price = productClone.price;
+    productClone.numReviews = 0;
 
-    // const body = JSON.stringify(productClone);
-    // await addProductFetch(body);
+    const body = JSON.stringify(productClone);
+    await addProductFetch(body);
 
-    // setVisibleAdd(false);
-    // ctxDispatch({
-    //   type: ActionTypes.UPDATE_LIST_START,
-    // });
+    setVisibleAdd(false);
+    ctxDispatch({
+      type: ActionTypes.UPDATE_LIST_START,
+    });
 
-    console.log(productClone);
   };
 
   const Inputs = [
@@ -118,6 +115,7 @@ export default function ProductAdd(props) {
             title={i.title}
             setter={setProduct}
             getter={product}
+            product={product}
             propName={i.propName}
             type={i.type}
           />
