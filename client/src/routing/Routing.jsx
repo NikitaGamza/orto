@@ -1,16 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
-import CartPage from '../pages/CartPage';
+import HomePage from '../pages/HomePage/HomePage';
+import CartPage from '../pages/CartPage/CartPage';
 import SearchPage from '../pages/SearchPage';
-import SigninPage from '../pages/SigninPage';
-import SignupPage from '../pages/SignupPage';
-import ShippingAddressPage from '../pages/ShippingAddressPage';
-import PaymentPage from '../pages/PaymentPage';
-import ProductAdminPage from '../pages/ProductPage';
+import SigninPage from '../pages/SigninPage/SigninPage';
+import SignupPage from '../pages/SignupPage/SignupPage';
+import ShippingAddressPage from '../pages/ShippingAddress/ShippingAddressPage';
+import PaymentPage from '../pages/PaymentPage/PaymentPage';
+import ProductAdminPage from '../pages/ProductPage/ProductPage';
 import ProductControl from '../pages/admin-pages/ProductAdminPage';
 import AdminRoute from './AdminRoute';
-import ProductCategory from '../components/admin/ProductCategory';
-import ProductOrders from '../components/admin/ProductOrders';
+import ProductCategory from '../components/admin/ProductCategory/ProductCategory';
+import ProductOrders from '../components/admin/ProductOrder/ProductOrders';
 
 export default function Routing() {
   return (

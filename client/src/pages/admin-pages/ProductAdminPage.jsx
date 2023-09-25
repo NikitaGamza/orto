@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import './ProductAdminPage.scss';
-import ProductList from '../../components/admin/ProductList';
+import ProductList from '../../components/admin/ProductList/ProductList';
 import useProductFetch from '../../components/products/useProductFetch';
-import ProductAdd from '../../components/admin/ProductAdd';
-import Control from '../../components/admin/Control';
-import ModalEdit from '../../components/admin/ModalEdit';
-import { Store } from '../../Store';
+import ProductAdd from '../../components/admin/ProductAdd/ProductAdd';
+import Control from '../../components/admin/Control/Control';
+import ModalEdit from '../../components/admin/ModalEdit/ModalEdit';
+import { ActionTypes, Store } from '../../Store';
 
 export default function ProductAdminPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -16,7 +16,7 @@ export default function ProductAdminPage() {
 
   const onSetIsVisibleEditModal = (value) => {
     ctxDispatch({
-      type: 'TOGGLE_EDIT_MODAL',
+      type: ActionTypes.TOGGLE_EDIT_MODAL,
       payload: value,
     });
   };

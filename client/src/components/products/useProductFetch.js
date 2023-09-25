@@ -11,7 +11,7 @@ const useProductFetch = () => {
 
   const productFetch = async () => {
     const actionFetchRequest = {
-      type: 'FETCH_PRODUCT_REQUEST',
+      type: ActionTypes.FETCH_PRODUCT_REQUEST,
     };
 
     ctxDispatch(actionFetchRequest);
@@ -20,13 +20,13 @@ const useProductFetch = () => {
       const { data } = await getProducts();
 
       const fetchSuccessAction = {
-        type: 'FETCH_PRODUCT_SUCCESS',
+        type: ActionTypes.FETCH_PRODUCT_SUCCESS,
         payload: data,
       };
       ctxDispatch(fetchSuccessAction);
     } catch (err) {
       const fetchFailAction = {
-        type: 'FETCH_PRODUCT_FAIL',
+        type: ActionTypes.FETCH_PRODUCT_FAIL,
       };
       ctxDispatch(fetchFailAction);
     }

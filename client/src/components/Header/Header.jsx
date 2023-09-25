@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 import Nav from 'react-bootstrap/Nav';
-import SearchBox from './SearchBox';
+import SearchBox from '../SearchBox';
 import { Link } from 'react-router-dom';
 import Badge from 'react-bootstrap/Badge';
 import NavDropdown from 'react-bootstrap/NavDropdown';

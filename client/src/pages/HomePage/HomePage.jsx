@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import ProductList from '../components/menu/ProductList';
-import useProductFetch from '../components/products/useProductFetch';
+import ProductList from '../../components/menu/ProductList';
+import useProductFetch from '../../components/products/useProductFetch';
 import { useEffect, useState } from 'react';
-import { getError } from '../utils.js';
+import { getError } from '../../utils.js';
 import axios from 'axios';
 
 export default function HomePage() {

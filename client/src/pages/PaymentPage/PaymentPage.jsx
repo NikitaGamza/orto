@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { useContext } from 'react';
-import { ActionTypes, Store } from '../Store';
+import { ActionTypes, Store } from '../../Store';
 import { useNavigate } from 'react-router-dom';
 
 export default function PaymentPage() {

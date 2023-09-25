@@ -11,7 +11,7 @@ import MessageBox from '../components/ui/MessageBox';
 import Button from 'react-bootstrap/esm/Button';
 // import ProductList from '../products/menu/ProductList';
 import ProductItem from '../components/menu/ProductItem';
-import { Store } from '../Store';
+import { ActionTypes, Store } from '../Store';
 
 const prices = [
   {
@@ -68,7 +68,7 @@ export default function SearchPage() {
         const { data } = await axios.get(
           `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
         );
-        ctxDispatch({ type: 'FETCH_PRODUCT_SUCCESS', payload: data });
+        ctxDispatch({ type: ActionTypes.FETCH_PRODUCT_SUCCESS, payload: data });
       } catch (err) {
         ctxDispatch({
           type: 'FETCH_FAIL',

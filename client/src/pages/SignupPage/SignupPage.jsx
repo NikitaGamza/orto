@@ -5,18 +5,19 @@ import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import Axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { Store } from '../Store';
-import { getError } from '../utils';
-import { signIn } from "../api/user";
+import { ActionTypes, Store } from '../../Store';
+import { getError } from '../../utils';
 
-export default function SigninPage() {
+export default function SignupPage() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
 
@@ -24,13 +25,17 @@ export default function SigninPage() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Пароли не совпадают');
+      return;
+    }
     try {
-      const body = {
+      const { data } = await Axios.post('/api/users/signup', {
+        name,
         email,
         password,
-      }
-      const { data } = await signIn(body);
-      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      });
+      ctxDispatch({ type: ActionTypes.USER_SIGNIN, payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
     } catch (err) {
@@ -44,15 +49,17 @@ export default function SigninPage() {
       navigate(redirect);
     }
   }, [navigate, redirect, userInfo]);
-
-
   return (
     <Container>
       <Helmet>
-        <title>Вход</title>
+        <title>Регистрация</title>
       </Helmet>
-      <h1 className="my-3">Войти</h1>
+      <h1 className="my-3">Регистрация</h1>
       <Form onSubmit={submitHandler}>
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>ФИО</Form.Label>
+          <Form.Control onChange={(e) => setName(e.target.value)} required />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -69,12 +76,20 @@ export default function SigninPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label>Повторите пароль</Form.Label>
+          <Form.Control
+            type="password"
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </Form.Group>
         <div className="mb-3">
-          <Button type="submit">Войти</Button>
+          <Button type="submit">Регистрация</Button>
         </div>
         <div className="mb-3">
-          Новый пользователь?{' '}
-          <Link to={`/signup?redirect=${redirect}`}>Создать аккаунт</Link>
+          Уже есть аккаунт?{' '}
+          <Link to={`/signin?redirect=${redirect}`}>Войти</Link>
         </div>
       </Form>
     </Container>

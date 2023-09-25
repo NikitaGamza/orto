@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Rating from '../components/menu/Rating';
+import Rating from '../../components/menu/Rating';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
-import Loading from '../components/ui/Loading';
-import MessageBox from '../components/ui/MessageBox';
-import { getError } from '../utils';
-import { ActionTypes, Store } from '../Store';
+import Loading from '../../components/ui/Loading';
+import MessageBox from '../../components/ui/MessageBox';
+import { getError } from '../../utils';
+import { ActionTypes, Store } from '../../Store';
 import './ProductPage.scss';
 
 // // const a = () => {return 'qwe'}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import OrderItem from './OrderItem';
+import OrderItem from '../OrderItem/OrderItem';
 import './ProductOrder.scss';
 
 export default function ProductOrders() {

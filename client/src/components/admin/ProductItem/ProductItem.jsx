@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ActionTypes, Store } from '../../Store';
+import { ActionTypes, Store } from '../../../Store';
 
 export default function ProductItem(props) {
   const { product } = props;
@@ -10,12 +10,12 @@ export default function ProductItem(props) {
 
   const onOpenModalEdit = (id) => {
     const toggleEditModalAction = {
-      type: 'TOGGLE_EDIT_MODAL',
+      type: ActionTypes.TOGGLE_EDIT_MODAL,
       payload: !getIsVisible(),
     };
 
     const setEditProductId = {
-      type: 'SET_EDIT_PRODUCT_ID',
+      type: ActionTypes.SET_EDIT_PRODUCT_ID,
       payload: id,
     };
     ctxDispatch(toggleEditModalAction);

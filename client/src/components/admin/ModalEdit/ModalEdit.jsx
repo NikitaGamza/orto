@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import ModalWindow from './ModalWindow/ModalWindow';
-import { ActionTypes, Store } from '../../Store';
-import Input from './Input';
-import InputFile from '../ui/InputFile/InputFile';
-import useInputFile from '../ui/InputFile/useInputFile';
-import InputPrice from '../ui/InputFile/InputPrice';
-import InputDropdown from './InputDropdown';
-import { getProductCategory } from '../../api/category';
+import ModalWindow from '../ModalWindow/ModalWindow';
+import { ActionTypes, Store } from '../../../Store';
+import Input from '../Input/Input';
+import InputFile from '../../ui/InputFile/InputFile';
+import useInputFile from '../../ui/InputFile/useInputFile';
+import InputPrice from '../../ui/InputFile/InputPrice';
+import InputDropdown from '../InputDropdown/InputDropdown';
+import { getProductCategory } from '../../../api/category';
 
 export default function ModalEdit(props) {
   const { isModalVisible, setIsModalVisible, updateList } = props;
@@ -21,7 +21,7 @@ export default function ModalEdit(props) {
 
   const onCloseModal = () => {
     const action = {
-      type: 'TOGGLE_EDIT_MODAL',
+      type: ActionTypes.TOGGLE_EDIT_MODAL,
       payload: state.product.isVisibleEditModal,
     };
     ctxDispatch(action);
@@ -169,7 +169,7 @@ export default function ModalEdit(props) {
     updateProduct();
 
     // ctxDispatch({
-    //   type: 'TOGGLE_EDIT_MODAL',
+    //   type: ActionTypes.TOGGLE_EDIT_MODAL,
     //   payload: false,
     // });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputType } from './InputTypes.enum';
-import Input from '../admin/Input';
-import InputTextarea from '../admin/InputTextarea';
+import Input from '../admin/Input/Input';
+import InputTextarea from '../admin/InputTextarea/InputTextarea';
 
 export default function InputGenerator(props) {
   const { title, propName, type, getter, setter, product } = props;

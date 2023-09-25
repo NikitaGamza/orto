@@ -1,14 +1,14 @@
 import { useContext, useEffect } from 'react';
-import { Store } from '../Store';
+import { Store } from '../../Store';
 import { Helmet } from 'react-helmet-async';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
-import MessageBox from '../components/ui/MessageBox';
+import MessageBox from '../../components/ui/MessageBox';
 import { Link, useNavigate } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import CartList from './CartList';
+import CartList from '../CartList/CartList';
 
 export default function CartPage() {
   const navigate = useNavigate();

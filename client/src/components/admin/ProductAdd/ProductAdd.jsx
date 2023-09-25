@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import Input from './Input';
-import ModalWindow from './ModalWindow/ModalWindow';
-import InputFile from '../ui/InputFile/InputFile';
-import useInputFile from '../ui/InputFile/useInputFile';
-import { getProductCategory } from '../../api/category';
-import { uploadFile } from '../../api/product';
-import { ActionTypes, Store } from '../../Store';
-import InputPrice from '../ui/InputFile/InputPrice';
-import { InputType } from '../generator/InputTypes.enum';
-import InputGenerator from '../generator/InputGenerator';
+import Input from '../Input/Input';
+import ModalWindow from '../ModalWindow/ModalWindow';
+import InputFile from '../../ui/InputFile/InputFile';
+import useInputFile from '../../ui/InputFile/useInputFile';
+import { getProductCategory } from '../../../api/category';
+import { uploadFile } from '../../../api/product';
+import { ActionTypes, Store } from '../../../Store';
+import InputPrice from '../../ui/InputFile/InputPrice';
+import { InputType } from '../../generator/InputTypes.enum';
+import InputGenerator from '../../generator/InputGenerator';
 
 const addProductFetch = async (body) => {
   const response = await fetch('/api/products/addproduct', {
@@ -61,23 +61,23 @@ export default function ProductAdd(props) {
     });
 
     const productClone = product;
-    // productClone.image = files.map(
-    //   (item, index) =>
-    //     `${productClone.nameProduct}-${productClone.articul}-${index}`
-    // );
-    // productClone.name = productClone.nameProduct;
-    // productClone.color = productClone.color.split(',').map((i) => i.trim());
-    // productClone.length = productClone.length.split(',').map((i) => i.trim());
-    // productClone.price = Number(productClone.price);
-    // productClone.numReviews = 0;
+    productClone.image = files.map(
+      (item, index) =>
+        `${productClone.nameProduct}-${productClone.articul}-${index}`
+    );
+    productClone.name = productClone.nameProduct;
+    productClone.color = productClone.color.split(',').map((i) => i.trim());
+    productClone.length = productClone.length.split(',').map((i) => i.trim());
+    productClone.price = Number(productClone.price);
+    productClone.numReviews = 0;
 
-    // const body = JSON.stringify(productClone);
-    // await addProductFetch(body);
+    const body = JSON.stringify(productClone);
+    await addProductFetch(body);
 
-    // setVisibleAdd(false);
-    // ctxDispatch({
-    //   type: ActionTypes.UPDATE_LIST_START,
-    // });
+    setVisibleAdd(false);
+    ctxDispatch({
+      type: ActionTypes.UPDATE_LIST_START,
+    });
 
     console.log(productClone);
   };
@@ -118,6 +118,7 @@ export default function ProductAdd(props) {
             title={i.title}
             setter={setProduct}
             getter={product}
+            product={product}
             propName={i.propName}
             type={i.type}
           />

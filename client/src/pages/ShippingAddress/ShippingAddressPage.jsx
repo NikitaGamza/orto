@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
 import { useNavigate } from 'react-router-dom';
-import { Store } from '../Store';
-import CheckoutSteps from '../components/CheckoutSteps';
+import { ActionTypes, Store } from '../../Store';
+import CheckoutSteps from '../../components/CheckoutSteps';
 
 export default function ShippingAddressPage() {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function ShippingAddressPage() {
   const submitHandler = (e) => {
     e.preventDefault();
     ctxDispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
+      type: ActionTypes.SAVE_SHIPPING_ADDRESS,
       payload: {
         fullName,
         address,

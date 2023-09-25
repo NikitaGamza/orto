@@ -5,12 +5,12 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import { Store } from './Store';
+import { ActionTypes, Store } from './Store';
 import { getError } from './utils';
 
 import { getProductCategory } from './api/category';
 import SideBar from './components/SideBar';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Routing from './routing/Routing';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   const { cart, userInfo } = state;
 
   const signoutHandler = () => {
-    ctxDispatch({ type: 'USER_SIGNOUT' });
+    ctxDispatch({ type: ActionTypes.USER_SIGNOUT });
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
   };

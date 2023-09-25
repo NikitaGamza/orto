@@ -33,19 +33,38 @@ const initialState = {
 };
 
 export const ActionTypes = {
+  //CART
   CART_ADD_ITEM: 'CART_ADD_ITEM',
-  UPDATE_LIST_START: 'UPDATE_LIST_START',
-  UPDATE_LIST_FINISH: 'UPDATE_LIST_FINISH',
   CART_REMOVE_ITEM: 'CART_REMOVE_ITEM',
   CART_DECREASE_ITEM: 'CART_DECREASE_ITEM',
   CART_INCREASE_ITEM: 'CART_INCREASE_ITEM',
+  CLEAR_CART: 'CLEAR_CART',
+
+  //shipping
+  SAVE_SHIPPING_ADDRESS: 'SAVE_SHIPPING_ADDRESS',
+
+  //UPDATE
+  UPDATE_LIST_START: 'UPDATE_LIST_START',
+  UPDATE_LIST_FINISH: 'UPDATE_LIST_FINISH',
 
   // Product details
   FETCH_SUCCESS_PRODUCT_DETAILS: 'FETCH_SUCCESS_PRODUCT_DETAILS',
   FETCH_FAIL_PRODUCT_DETAILS: 'FETCH_FAIL_PRODUCT_DETAILS',
   FETCH_REQUEST_PRODUCT_DETAILS: 'FETCH_REQUEST_PRODUCT_DETAILS',
+  FETCH_PRODUCT_REQUEST: 'FETCH_PRODUCT_REQUEST',
+  FETCH_PRODUCT_SUCCESS: 'FETCH_PRODUCT_SUCCESS',
+  FETCH_PRODUCT_FAIL: 'FETCH_PRODUCT_FAIL',
+  SET_EDIT_PRODUCT_ID: 'SET_EDIT_PRODUCT_ID',
+  SET_REMOVE_PRODUCT_ID: 'SET_REMOVE_PRODUCT_ID',
+
+  TOGGLE_EDIT_MODAL: 'TOGGLE_EDIT_MODAL',
+
+  //CATEGORIES
   FETCH_CATEGORIES: 'FETCH_CATEGORIES',
-  CLEAR_CART: 'CLEAR_CART',
+
+  //USER
+  USER_SIGNIN: 'USER_SIGNIN',
+  USER_SIGNOUT: 'USER_SIGNOUT', //
 };
 
 function reducer(state, action) {
@@ -107,9 +126,9 @@ function reducer(state, action) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-    case 'USER_SIGNIN':
+    case ActionTypes.USER_SIGNIN:
       return { ...state, userInfo: action.payload };
-    case 'USER_SIGNOUT':
+    case ActionTypes.USER_SIGNOUT:
       return {
         ...state,
         userInfo: null,
@@ -118,7 +137,7 @@ function reducer(state, action) {
           shippingAddress: {},
         },
       };
-    case 'SAVE_SHIPPING_ADDRESS':
+    case ActionTypes.SAVE_SHIPPING_ADDRESS:
       return {
         ...state,
         cart: {
@@ -127,23 +146,23 @@ function reducer(state, action) {
         },
       };
 
-    case 'FETCH_PRODUCT_REQUEST':
+    case ActionTypes.FETCH_PRODUCT_REQUEST:
       return { ...state, product: { ...state.product, loading: true } };
 
-    case 'FETCH_PRODUCT_SUCCESS':
+    case ActionTypes.FETCH_PRODUCT_SUCCESS:
       const products = action.payload;
       return {
         ...state,
         product: { ...state.product, list: products, loading: false },
       };
 
-    case 'FETCH_PRODUCT_FAIL':
+    case ActionTypes.FETCH_PRODUCT_FAIL:
       return {
         ...state,
         product: { ...state.product, list: null, loading: false },
       };
 
-    case 'TOGGLE_EDIT_MODAL':
+    case ActionTypes.TOGGLE_EDIT_MODAL:
       return {
         ...state,
         product: {
@@ -152,7 +171,7 @@ function reducer(state, action) {
         },
       };
 
-    case 'SET_EDIT_PRODUCT_ID':
+    case ActionTypes.SET_EDIT_PRODUCT_ID:
       return {
         ...state,
         product: {
@@ -161,7 +180,7 @@ function reducer(state, action) {
         },
       };
 
-    case 'SET_REMOVE_PRODUCT_ID':
+    case ActionTypes.SET_REMOVE_PRODUCT_ID:
       return {
         ...state,
         product: {

@@ -6,7 +6,7 @@ export default function Input(props) {
     <Form.Group className="mb-3" controlId="name">
       <Form.Label>{title}</Form.Label>
       <Form.Control
-        onChange={(e) => setProduct({ propName: e.target.value })}
+        onChange={(e) => setProduct([propName], e.target.value)}
         value={product[propName]}
         required
       />
