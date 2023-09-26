@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import ModalWindow from './ModalWindow/ModalWindow';
-import { ActionTypes, Store } from '../../Store';
-import Input from './Input';
-import InputFile from '../ui/InputFile/InputFile';
-import useInputFile from '../ui/InputFile/useInputFile';
-import InputPrice from '../ui/InputFile/InputPrice';
-import InputDropdown from './InputDropdown';
-import { getProductCategory } from '../../api/category';
-import InputGenerator from '../generator/InputGenerator';
-import { InputType } from '../generator/InputTypes.enum';
+import ModalWindow from '../ModalWindow/ModalWindow';
+import { ActionTypes, Store } from '../../../Store';
+import Input from '../Input/Input';
+import InputFile from '../../ui/InputFile/InputFile';
+import useInputFile from '../../ui/InputFile/useInputFile';
+import InputPrice from '../../ui/InputFile/InputPrice';
+import InputDropdown from '../InputDropdown/InputDropdown';
+import { getProductCategory } from '../../../api/category.js';
+import InputGenerator from '../../generator/InputGenerator';
+import { InputType } from '../../generator/InputTypes.enum';
 
 export default function ModalEdit(props) {
   const { isModalVisible, setIsModalVisible, updateList, setter } = props;
