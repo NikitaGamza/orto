@@ -117,6 +117,7 @@ function reducer(state, action) {
 
     //add to cart
     case ActionTypes.CART_REMOVE_ITEM: {
+      // const cartItems = state.cart.cartItems.filter(filterCartItems())
       const cartItems = state.cart.cartItems.filter(
         (item) =>
           item._id !== action.payload._id ||

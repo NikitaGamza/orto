@@ -48,8 +48,6 @@ export default function ProductAdd(props) {
       ...product,
       prices: priceList.map((item) => ({ price: item.price, size: item.size })),
     });
-    console.log(priceList);
-    console.log(product);
   }, [priceList]);
 
   const addProduct = async () => {
@@ -68,7 +66,7 @@ export default function ProductAdd(props) {
     productClone.name = productClone.nameProduct;
     productClone.color = productClone.color.split(',').map((i) => i.trim());
     productClone.length = productClone.length.split(',').map((i) => i.trim());
-    productClone.price = Number(productClone.price);
+    productClone.price = productClone.price;
     productClone.numReviews = 0;
 
     const body = JSON.stringify(productClone);
@@ -78,8 +76,6 @@ export default function ProductAdd(props) {
     ctxDispatch({
       type: ActionTypes.UPDATE_LIST_START,
     });
-
-    console.log(productClone);
   };
 
   const Inputs = [
