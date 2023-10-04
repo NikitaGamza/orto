@@ -5,7 +5,8 @@ import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import Axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { ActionTypes, Store } from '../../Store';
+import { Store } from '../../Store';
+import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import { getError } from '../../utils';
 
 export default function SignupPage() {

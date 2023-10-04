@@ -11,7 +11,8 @@ import MessageBox from '../components/ui/MessageBox';
 import Button from 'react-bootstrap/esm/Button';
 // import ProductList from '../products/menu/ProductList';
 import ProductItem from '../components/menu/ProductItem';
-import { ActionTypes, Store } from '../Store';
+import { Store } from '../Store';
+import { ActionTypes } from '../ActionTypes/ActionTypes';
 
 const prices = [
   {

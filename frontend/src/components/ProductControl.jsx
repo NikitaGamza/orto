@@ -256,7 +256,6 @@ export default function ProductControl() {
                   <img
                     src={`http://localhost:5000/static/images/products/${product.image[0]}.jpg`}
                     alt=""
-                    srcset=""
                     className="control-img"
                   />
                   <div>

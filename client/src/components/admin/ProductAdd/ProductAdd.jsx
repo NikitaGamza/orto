@@ -5,7 +5,9 @@ import InputFile from '../../ui/InputFile/InputFile';
 import useInputFile from '../../ui/InputFile/useInputFile';
 import { getProductCategory } from '../../../api/category';
 import { uploadFile } from '../../../api/product';
-import { ActionTypes, Store } from '../../../Store';
+import { Store } from '../../../Store';
+// import { ActionTypes } from '../../../Store';
+import { ActionTypes } from '../../../ActionTypes/ActionTypes';
 import InputPrice from '../../ui/InputFile/InputPrice';
 import { InputType } from '../../generator/InputTypes.enum';
 import InputGenerator from '../../generator/InputGenerator';
@@ -51,6 +53,7 @@ export default function ProductAdd(props) {
   }, [priceList]);
 
   const addProduct = async () => {
+    console.log(product);
     files.forEach(async (file, index) => {
       await uploadFile(
         file,
@@ -64,8 +67,15 @@ export default function ProductAdd(props) {
         `${productClone.nameProduct}-${productClone.articul}-${index}`
     );
     productClone.name = productClone.nameProduct;
-    productClone.color = productClone.color.split(',').map((i) => i.trim());
-    productClone.length = productClone.length.split(',').map((i) => i.trim());
+    if (productClone.color) {
+      productClone.color = productClone.color.split(',').map((i) => i.trim());
+    }
+    if (productClone.length) {
+      productClone.length = productClone.length.split(',').map((i) => i.trim());
+    }
+    // productClone.length =
+    //   productClone.length &&
+    //   productClone.length.split(',').map((i) => i.trim());
     productClone.price = productClone.price;
     productClone.numReviews = 0;
 
@@ -106,17 +116,20 @@ export default function ProductAdd(props) {
         >
           {category &&
             category.map((item) => (
-              <option value={item._id}>{item.name}</option>
+              <option value={item._id} key={item._id}>
+                {item.name}
+              </option>
             ))}
         </select>
-        {Inputs.map((i) => (
+        {Inputs.map((input, index) => (
           <InputGenerator
-            title={i.title}
+            title={input.title}
             setter={setProduct}
             getter={product}
             product={product}
-            propName={i.propName}
-            type={i.type}
+            propName={input.propName}
+            type={input.type}
+            key={index}
           />
         ))}
         <InputPrice priceList={priceList} setPriceList={setPriceList} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { useContext } from 'react';
-import { ActionTypes, Store } from '../../Store';
+import { Store } from '../../Store';
+import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import { useNavigate } from 'react-router-dom';
 
 export default function PaymentPage() {
@@ -39,6 +40,7 @@ export default function PaymentPage() {
 
     localStorage.removeItem('cartItems'); //how to clean
     ctxDispatch({ type: ActionTypes.CLEAR_CART });
+    alert('Ваш заказ успешно оформлен');
     navigate('/');
     return await response.json();
   };

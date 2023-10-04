@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
-import { ActionTypes, Store } from '../../../Store';
+import { Store } from '../../../Store';
+import { ActionTypes } from '../../../ActionTypes/ActionTypes';
 import Input from '../Input/Input';
 import InputFile from '../../ui/InputFile/InputFile';
 import useInputFile from '../../ui/InputFile/useInputFile';
@@ -9,6 +10,7 @@ import InputDropdown from '../InputDropdown/InputDropdown';
 import { getProductCategory } from '../../../api/category.js';
 import InputGenerator from '../../generator/InputGenerator';
 import { InputType } from '../../generator/InputTypes.enum';
+import { uploadFile } from '../../../api/product';
 
 export default function ModalEdit(props) {
   const { isModalVisible, setIsModalVisible, updateList, setter } = props;
@@ -91,49 +93,55 @@ export default function ModalEdit(props) {
   }, []);
 
   const updateProduct = async () => {
-    // console.log(files);
+    console.log(files);
 
-    // console.log(
-    //   files.map(
-    //     (item, index) =>
-    //       `${product.nameProduct}-${product.articul}-${
-    //         product.image.length + index
-    //       }`
-    //   )
-    // );
+    console.log(
+      files.map(
+        (item, index) =>
+          `${product.nameProduct}-${product.articul}-${
+            product.image.length + index
+          }`
+      )
+    );
+    files.forEach(async (file, index) => {
+      await uploadFile(
+        file,
+        `${product.nameProduct}-${product.articul}-${index}`
+      );
+    });
+    const productClone = product;
+    productClone.image = files.map(
+      (item, index) =>
+        `${productClone.nameProduct}-${productClone.articul}-${index}`
+    );
+    productClone.image = [...productClone.image, ...imageUrls];
 
     console.log('edited');
 
-    return;
+    // return;
+    console.log(productClone.image);
+    const body = {
+      ...product,
+      name: product.name,
+      color: product.color.split(',').map((i) => i.trim()),
+      price: Number(product.price),
+      rating: Number(product.rating),
+      size: Number(product.size),
+      image: productClone.image,
+    };
 
-    // const body = {
-    //   ...product,
-    //   id: undefined,
-    //   nameProduct: undefined,
-    //   name: product.nameProduct,
-    //   color: product.color.split(',').map((i) => i.trim()),
-    //   price: Number(product.price),
-    //   rating: Number(product.rating),
-    //   size: Number(product.size),
-    //   // image: product.image.concate(
-    //   //   files.map(
-    //   //     (item, index) => `${product.nameProduct}-${product.articul}-${index}`
-    //   //   )
-    //   // ),
-    //   image: product.image,
-    // };
-
-    // try {
-    //   await fetch('/api/products/', {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(body),
-    //   });
-    // } catch {
-    //   console.log('error');
-    // }
+    try {
+      await fetch('/api/products/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      console.log(body);
+    } catch {
+      console.log('error');
+    }
   };
 
   useEffect(() => {
@@ -155,7 +163,7 @@ export default function ModalEdit(props) {
   }, [isLoading]);
 
   const Inputs = [
-    { title: 'Наименование', propName: 'nameProduct', type: InputType.text },
+    { title: 'Наименование', propName: 'name', type: InputType.text },
     { title: 'Ссылка', propName: 'slug', type: InputType.text },
     { title: 'Длинна', propName: 'length', type: InputType.text },
     { title: 'Артикул', propName: 'articul', type: InputType.text },
@@ -192,15 +200,16 @@ export default function ModalEdit(props) {
           setImageUrls={setImageUrls}
         />
 
-        {Inputs.map((i) => {
+        {Inputs.map((input, index) => {
           return (
             <InputGenerator
-              title={i.title}
+              title={input.title}
               setter={setProduct}
               getter={product}
               product={product}
-              propName={i.propName}
-              type={i.type}
+              propName={input.propName}
+              type={input.type}
+              key={index}
             />
           );
         })}
@@ -210,7 +219,7 @@ export default function ModalEdit(props) {
             onEdit();
           }}
         >
-          +
+          Сохранить изменения
         </button>
       </ModalWindow>
     </>

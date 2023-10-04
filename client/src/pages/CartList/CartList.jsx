@@ -4,7 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import { ActionTypes, Store } from '../../Store';
+import { Store } from '../../Store';
+import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import { useContext } from 'react';
 import './CartList.scss';
 

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import { ActionTypes, Store } from '../../Store';
+import { Store } from '../../Store';
+import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import { getProducts } from '../../api/product';
 
 const useProductFetch = () => {

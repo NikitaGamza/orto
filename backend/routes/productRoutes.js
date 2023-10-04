@@ -162,6 +162,8 @@ productRouter.put('/', async (req, res) => {
   res.json(editedProduct);
 });
 
+productRouter.patch('/', async (req, res) => {});
+
 export default productRouter;
 
 /*

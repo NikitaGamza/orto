@@ -5,8 +5,10 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import { ActionTypes, Store } from './Store';
+import { Store } from './Store';
+// import { ActionTypes } from './Store';
 import { getError } from './utils';
+import { ActionTypes } from './ActionTypes/ActionTypes';
 
 import { getProductCategory } from './api/category';
 import SideBar from './components/SideBar';

@@ -5,7 +5,8 @@ import useProductFetch from '../../components/products/useProductFetch';
 import ProductAdd from '../../components/admin/ProductAdd/ProductAdd';
 import Control from '../../components/admin/Control/Control';
 import ModalEdit from '../../components/admin/ModalEdit/ModalEdit';
-import { ActionTypes, Store } from '../../Store';
+import { Store } from '../../Store';
+import { ActionTypes } from '../../ActionTypes/ActionTypes';
 
 export default function ProductAdminPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);

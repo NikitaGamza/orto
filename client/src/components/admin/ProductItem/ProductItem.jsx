@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { ActionTypes, Store } from '../../../Store';
+import { Store } from '../../../Store';
+import { ActionTypes } from '../../../ActionTypes/ActionTypes';
 
 export default function ProductItem(props) {
   const { product } = props;
@@ -38,7 +39,6 @@ export default function ProductItem(props) {
         <img
           src={`http://localhost:5000/static/images/products/${product.image[0]}.jpg`}
           alt=""
-          srcset=""
           className="control-img"
         />
 

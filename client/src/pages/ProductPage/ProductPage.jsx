@@ -11,7 +11,8 @@ import { Helmet } from 'react-helmet-async';
 import Loading from '../../components/ui/Loading';
 import MessageBox from '../../components/ui/MessageBox';
 import { getError } from '../../utils';
-import { ActionTypes, Store } from '../../Store';
+import { Store } from '../../Store';
+import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import './ProductPage.scss';
 
 // // const a = () => {return 'qwe'}

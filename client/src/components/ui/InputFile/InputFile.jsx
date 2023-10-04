@@ -15,6 +15,7 @@ export default function InputFile(props) {
 
   const onChangeFileInput = (event) => {
     const files = event.target.files;
+    console.log(files);
 
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
@@ -57,7 +58,7 @@ export default function InputFile(props) {
 
       <div className={'added-image'}>
         {imageUrls.map((url, index) => (
-          <div className="added-image-container">
+          <div className="added-image-container" key={index}>
             <img src={url} alt={'*'} />
 
             <div>
