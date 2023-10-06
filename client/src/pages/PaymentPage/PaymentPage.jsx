@@ -9,12 +9,6 @@ export default function PaymentPage() {
   const {
     cart: { cartItems, shippingAddress },
   } = state;
-
-  // useLayoutEffect(() => {
-  //   console.log(shippingAddress);
-  //   console.log(cartItems);
-  //   localStorage.removeItem('cartItems');
-  // }, []);
   const navigate = useNavigate();
   const addOrderFetch = async () => {
     const completeOrder = {};
@@ -29,7 +23,6 @@ export default function PaymentPage() {
     completeOrder.isTaken = false;
     completeOrder.isDone = false;
     const body = JSON.stringify(completeOrder);
-    console.log(completeOrder);
     const response = await fetch('/api/orders', {
       method: 'POST',
       headers: {
@@ -38,7 +31,7 @@ export default function PaymentPage() {
       body,
     });
 
-    localStorage.removeItem('cartItems'); //how to clean
+    localStorage.removeItem('cartItems');
     ctxDispatch({ type: ActionTypes.CLEAR_CART });
     alert('Ваш заказ успешно оформлен');
     navigate('/');
@@ -53,8 +46,6 @@ export default function PaymentPage() {
     completeOrder.clientCity = shippingAddress.city;
     completeOrder.clientCountry = shippingAddress.country;
     completeOrder.clientPostalCode = shippingAddress.postalCode;
-    console.log(completeOrder);
-    // addOrderFetch(completeOrder);
   });
 
   return (

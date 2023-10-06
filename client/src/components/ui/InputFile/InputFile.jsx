@@ -1,21 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import './InputFile.scss';
 
-// files //
-// imageUrls
-
-// product.image
-// // del [1], add files
-
 export default function InputFile(props) {
-  const { files, setFiles, onRemove, imageUrls, setImageUrls } = props;
+  const { setFiles, onRemove, imageUrls, setImageUrls } = props;
 
   const inputFileRef = useRef(null);
 
   const onChangeFileInput = (event) => {
     const files = event.target.files;
-    console.log(files);
 
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);

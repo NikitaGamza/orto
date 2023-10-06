@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Rating from '../../components/menu/Rating';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -14,11 +13,6 @@ import { getError } from '../../utils';
 import { Store } from '../../Store';
 import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import './ProductPage.scss';
-
-// // const a = () => {return 'qwe'}
-// // const a = () => 'qwe'
-
-// const a = b => {}
 
 export default function ProductPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -88,7 +82,6 @@ export default function ProductPage() {
     <div className="flex_wrap_spacearound product__page">
       <div className="product__page__imglist">
         {product.image.map((item) => {
-          console.log(item);
           return (
             <img
               className="product__page__imglist__item"
@@ -167,7 +160,6 @@ export default function ProductPage() {
             </select>
           </div>
         )}
-        {/* <p>{selectedColor}</p> */}
         <p>Фирма: {product.brand}</p>
         <p>Страна производитель: {product.country}</p>
         <p>Описание товара:</p>

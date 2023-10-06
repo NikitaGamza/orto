@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Store } from '../../../Store';
 import { ActionTypes } from '../../../ActionTypes/ActionTypes';
 
@@ -21,7 +21,6 @@ export default function ProductItem(props) {
     };
     ctxDispatch(toggleEditModalAction);
     ctxDispatch(setEditProductId);
-    console.log('toggled:', product);
   };
 
   const onRemove = async (id) => {

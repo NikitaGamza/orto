@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import OrderItem from '../OrderItem/OrderItem';
 import './ProductOrder.scss';
 
 export default function ProductOrders() {
@@ -35,7 +34,7 @@ export default function ProductOrders() {
       setOrderList(data);
       return await response.json();
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
   async function doneOrder(id) {
@@ -44,7 +43,6 @@ export default function ProductOrders() {
       ...order,
       isDone: !order.isDone,
     };
-    console.log(JSON.stringify(madeOrder));
     try {
       const response = await fetch('/api/orders/done', {
         method: 'PUT',
@@ -54,8 +52,8 @@ export default function ProductOrders() {
         body: JSON.stringify(madeOrder),
       });
       onUpdate();
-    } catch {
-      console.log('error');
+    } catch (error) {
+      alert(error);
     }
   }
   async function takeOrder(id) {
@@ -73,8 +71,8 @@ export default function ProductOrders() {
         body: JSON.stringify(takeOrder),
       });
       onUpdate();
-    } catch {
-      console.log('error');
+    } catch (error) {
+      alert(error);
     }
   }
   return (

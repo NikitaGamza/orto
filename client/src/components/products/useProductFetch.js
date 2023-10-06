@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Store } from '../../Store';
 import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import { getProducts } from '../../api/product';

@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { Store } from '../../../Store';
 import { ActionTypes } from '../../../ActionTypes/ActionTypes';
-import Input from '../Input/Input';
 import InputFile from '../../ui/InputFile/InputFile';
 import useInputFile from '../../ui/InputFile/useInputFile';
 import InputPrice from '../../ui/InputFile/InputPrice';
-import InputDropdown from '../InputDropdown/InputDropdown';
 import { getProductCategory } from '../../../api/category.js';
 import InputGenerator from '../../generator/InputGenerator';
 import { InputType } from '../../generator/InputTypes.enum';
 import { uploadFile } from '../../../api/product';
 
 export default function ModalEdit(props) {
-  const { isModalVisible, setIsModalVisible, updateList, setter } = props;
+  const { setIsModalVisible } = props;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const [isVisible, setIsVisible] = useState(true);
@@ -42,21 +40,11 @@ export default function ModalEdit(props) {
       ...product,
       prices: priceList.map((item) => ({ price: item.price, size: item.size })),
     });
-    // console.log(priceList);
-    // console.log(product);
   }, [priceList]);
-
-  useEffect(() => {
-    if (product) {
-      // setPriceList(product.prices);
-      console.log(product);
-    }
-  }, [product]);
 
   useEffect(() => {
     const handler = async () => {
       const { data } = await getProductCategory();
-      console.log(data);
       setCategory(data);
     };
     handler();
@@ -84,25 +72,12 @@ export default function ModalEdit(props) {
 
       setIsLoading(false);
     } catch (error) {
-      console.error(error.message);
+      alert(error.message);
     }
   };
 
-  useEffect(() => {
-    console.log(this);
-  }, []);
-
   const updateProduct = async () => {
-    console.log(files);
-
-    console.log(
-      files.map(
-        (item, index) =>
-          `${product.nameProduct}-${product.articul}-${
-            product.image.length + index
-          }`
-      )
-    );
+    //переписать на фор
     files.forEach(async (file, index) => {
       await uploadFile(
         file,
@@ -116,10 +91,7 @@ export default function ModalEdit(props) {
     );
     productClone.image = [...productClone.image, ...imageUrls];
 
-    console.log('edited');
-
     // return;
-    console.log(productClone.image);
     const body = {
       ...product,
       name: product.name,
@@ -138,16 +110,13 @@ export default function ModalEdit(props) {
         },
         body: JSON.stringify(body),
       });
-      console.log(body);
     } catch {
-      console.log('error');
+      alert('error');
     }
   };
 
   useEffect(() => {
-    console.log(state.product);
     if (state.product.isVisibleEditModal) {
-      console.log(state.product.editProductId);
       getProductById(state.product.editProductId);
     }
   }, [state.product.isVisibleEditModal]);
@@ -174,11 +143,6 @@ export default function ModalEdit(props) {
   ];
   const onEdit = () => {
     updateProduct();
-
-    // ctxDispatch({
-    //   type: ActionTypes.TOGGLE_EDIT_MODAL,
-    //   payload: false,
-    // });
 
     ctxDispatch({ type: ActionTypes.UPDATE_LIST_START });
     setIsModalVisible(false);

@@ -40,7 +40,6 @@ export default function SignupPage() {
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
     } catch (err) {
-      // toast.error('Неверный email или пароль');
       alert(getError(err));
     }
   };

@@ -10,6 +10,5 @@ export default function Input(props) {
         required
       />
     </Form.Group>
-    // <p>{propName}</p>
   );
 }

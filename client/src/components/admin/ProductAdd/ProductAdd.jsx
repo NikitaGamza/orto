@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import Input from '../Input/Input';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import InputFile from '../../ui/InputFile/InputFile';
 import useInputFile from '../../ui/InputFile/useInputFile';
 import { getProductCategory } from '../../../api/category';
 import { uploadFile } from '../../../api/product';
 import { Store } from '../../../Store';
-// import { ActionTypes } from '../../../Store';
 import { ActionTypes } from '../../../ActionTypes/ActionTypes';
 import InputPrice from '../../ui/InputFile/InputPrice';
 import { InputType } from '../../generator/InputTypes.enum';
@@ -39,7 +37,6 @@ export default function ProductAdd(props) {
   useEffect(() => {
     const handler = async () => {
       const { data } = await getProductCategory();
-      console.log(data);
       setCategory(data);
     };
     handler();
@@ -53,7 +50,6 @@ export default function ProductAdd(props) {
   }, [priceList]);
 
   const addProduct = async () => {
-    console.log(product);
     files.forEach(async (file, index) => {
       await uploadFile(
         file,
@@ -73,10 +69,7 @@ export default function ProductAdd(props) {
     if (productClone.length) {
       productClone.length = productClone.length.split(',').map((i) => i.trim());
     }
-    // productClone.length =
-    //   productClone.length &&
-    //   productClone.length.split(',').map((i) => i.trim());
-    productClone.price = productClone.price;
+    productClone.price = productClone.price; //ИСПРАВИТЬ
     productClone.numReviews = 0;
 
     const body = JSON.stringify(productClone);

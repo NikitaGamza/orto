@@ -1,16 +1,8 @@
-import { useState } from 'react';
-
 export default function InputPrice({ priceList, setPriceList }) {
   function addPrice() {
-    //setPriceList([...priceList, {price: 0, size: 0}]);
-
     const cloneArray = Array.from(priceList);
     cloneArray.push({ price: 0, size: '' });
     setPriceList(cloneArray);
-  }
-
-  function priceConsole() {
-    console.log(priceList);
   }
 
   function priceSync() {

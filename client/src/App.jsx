@@ -1,12 +1,11 @@
 import './App.scss';
 
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
-import { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Store } from './Store';
-// import { ActionTypes } from './Store';
 import { getError } from './utils';
 import { ActionTypes } from './ActionTypes/ActionTypes';
 
@@ -31,10 +30,7 @@ function App() {
   const fetchCatigories = async () => {
     try {
       const { data } = await getProductCategory();
-      console.log(data);
-
       setCategories(data);
-      // Store.ActionTypes.FETCH_CATEGORIES(data);
     } catch (err) {
       alert(getError(err));
     }

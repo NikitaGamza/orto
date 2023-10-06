@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { Store } from '../../Store';
 import { Helmet } from 'react-helmet-async';
-import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import MessageBox from '../../components/ui/MessageBox';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,10 +19,6 @@ export default function CartPage() {
   const checkoutHandler = () => {
     navigate('/signin?redirect=/shipping');
   };
-
-  useEffect(() => {
-    console.log(cartItems);
-  }, []);
 
   return (
     <div>

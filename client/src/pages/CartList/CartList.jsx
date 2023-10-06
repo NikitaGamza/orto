@@ -1,6 +1,5 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
@@ -11,14 +10,7 @@ import './CartList.scss';
 
 export default function CartList(props) {
   const { cartItems } = props;
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-
-  const updateCartHandler = async (item, quantity) => {
-    ctxDispatch({
-      type: ActionTypes.CART_ADD_ITEM,
-      payload: { ...item, quantity },
-    });
-  };
+  const { dispatch: ctxDispatch } = useContext(Store);
 
   const onDecreaseItem = (_id, size, color) => {
     ctxDispatch({
@@ -40,13 +32,6 @@ export default function CartList(props) {
 
   return (
     <ListGroup>
-      {/* <button
-        onClick={() => {
-          console.log(cartItems);
-        }}
-      >
-        QWE
-      </button> */}
       <ListGroup.Item>
         <div className="flex_wrap_spacebetween_align-center">
           <Col md={2}>Наименование</Col>
@@ -60,7 +45,6 @@ export default function CartList(props) {
       </ListGroup.Item>
       {cartItems.map((item) => (
         <ListGroup.Item key={item._id}>
-          {/* <Row> */}
           <div className="flex_wrap_spacebetween_align-center">
             <Col md={2}>
               <img
@@ -98,7 +82,6 @@ export default function CartList(props) {
               </Button>
             </Col>
           </div>
-          {/* </Row> */}
         </ListGroup.Item>
       ))}
     </ListGroup>

@@ -24,7 +24,6 @@ export default function ProductCategory() {
     const body = {
       name: category,
     };
-    console.log(body);
     await fetch('/api/category', {
       method: 'POST',
       headers: {
