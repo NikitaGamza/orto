@@ -89,7 +89,7 @@ export default function ModalEdit(props) {
       (item, index) =>
         `${productClone.nameProduct}-${productClone.articul}-${index}`
     );
-    productClone.image = [...productClone.image, ...imageUrls];
+    productClone.image = [...productClone.image];
 
     // return;
     const body = {

@@ -8,7 +8,9 @@ export default function ProductList(props) {
     <ProductListWrapper loading={loading} error={error}>
       <div className="row_wrap_space-around gap-20">
         {products &&
-          products.map((product) => <ProductItem product={product} />)}
+          products.map((product, index) => (
+            <ProductItem key={index} product={product} />
+          ))}
       </div>
     </ProductListWrapper>
   );

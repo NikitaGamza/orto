@@ -13,6 +13,7 @@ import { getError } from '../../utils';
 import { Store } from '../../Store';
 import { ActionTypes } from '../../ActionTypes/ActionTypes';
 import './ProductPage.scss';
+import AddToCard from './ProductPageComponents/AddToCard';
 
 export default function ProductPage() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -81,9 +82,10 @@ export default function ProductPage() {
   ) : (
     <div className="flex_wrap_spacearound product__page">
       <div className="product__page__imglist">
-        {product.image.map((item) => {
+        {product.image.map((item, index) => {
           return (
             <img
+              key={index}
               className="product__page__imglist__item"
               src={`http://localhost:5000/static/images/products/${item}.jpg`}
               alt={product.name}
@@ -99,7 +101,6 @@ export default function ProductPage() {
 
         <h1 className="product__page__name">{product.name}</h1>
 
-        {/* <Rating rating={product.rating} numReviews={product.numReviews} /> */}
         <div className="product__page__sizelist">
           <span>Размер:</span>
 
@@ -108,8 +109,9 @@ export default function ProductPage() {
             onChange={(e) => setSelectedPrice(JSON.parse(e.target.value))}
           >
             {product != null &&
-              product.prices.map((item) => (
+              product.prices.map((item, index) => (
                 <option
+                  key={index}
                   className="product__page__sizelist__selector__option"
                   value={JSON.stringify(item)}
                 >
@@ -126,8 +128,9 @@ export default function ProductPage() {
               className="product__page__lengthlist__selector"
               onChange={(e) => setSelectedLength(e.target.value)}
             >
-              {product.length.map((item) => (
+              {product.length.map((item, index) => (
                 <option
+                  key={index}
                   className="product__page__lengthlist__selector__option"
                   value={item}
                 >
@@ -147,9 +150,10 @@ export default function ProductPage() {
               id="color"
               onChange={(e) => setSelectedColor(e.target.value)}
             >
-              {product.color.map((item) => {
+              {product.color.map((item, index) => {
                 return (
                   <option
+                    key={index}
                     className="product__page__colorlist__selector__option"
                     value={item}
                   >
@@ -165,7 +169,17 @@ export default function ProductPage() {
         <p>Описание товара:</p>
         <pre className="product__page__description">{product.description}</pre>
       </div>
-
+      {/* <AddToCard
+        _id
+        image={product.image}
+        name={product.name}
+        articul={product.articul}
+        size={selectedPrice}
+        price={selectedPrice}
+        color={selectedColor}
+        slug={product.slug}
+        length={selectedLength}
+      /> */}
       <div>
         <Card>
           <Card.Body>
@@ -178,14 +192,14 @@ export default function ProductPage() {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
-                  onClick={() =>
-                    addToCartHandler(
-                      product._id,
-                      selectedPrice.price,
-                      selectedPrice.size,
-                      selectedLength
-                    )
-                  }
+                  // onClick={() =>
+                  //   addToCartHandler(
+                  //     product._id,
+                  //     selectedPrice.price,
+                  //     selectedPrice.size,
+                  //     selectedLength
+                  //   )
+                  // }
                   variant="primary"
                 >
                   Добавить в корзину

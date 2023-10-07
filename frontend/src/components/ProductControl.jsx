@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import './ProductControl.scss';
-// import { Link } from 'react-router-dom';
-//import data from '../data';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
-// import { Helmet } from 'react-helmet-async';
 import Loading from './Loading';
 import MessageBox from './MessageBox';
 import Form from 'react-bootstrap/Form';
@@ -29,7 +26,7 @@ export default function ProductControl() {
   const [productId, setProductId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [files, setFiles] = useState([]);
-  const [nameProduct, setNameProduct] = useState('');
+  const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
@@ -69,7 +66,7 @@ export default function ProductControl() {
 
       formData.append('images', file);
 
-      formData.append('names', `${nameProduct}-${articul}-${index}`);
+      formData.append('names', `${name}-${articul}-${index}`);
 
       await fetch('/api/products/upload', {
         method: 'POST',
@@ -78,8 +75,8 @@ export default function ProductControl() {
     });
 
     const newProduct = {
-      image: files.map((item, index) => `${nameProduct}-${articul}-${index}`),
-      name: nameProduct,
+      image: files.map((item, index) => `${name}-${articul}-${index}`),
+      name,
       slug,
       category,
       articul,
@@ -145,7 +142,7 @@ export default function ProductControl() {
               <Form.Label>Наименование</Form.Label>
               <Form.Control
                 onChange={(e) => {
-                  setNameProduct(e.target.value);
+                  setName(e.target.value);
                 }}
                 required
               />

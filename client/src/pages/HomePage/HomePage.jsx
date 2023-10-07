@@ -47,8 +47,8 @@ export default function HomePage() {
         <h3>Фильтры</h3>
         <div>
           <button></button>
-          {categories.map((item) => (
-            <button>{item.name}</button>
+          {categories.map((item, index) => (
+            <button key={index}>{item.name}</button>
           ))}
           <p>{filterList}</p>
         </div>

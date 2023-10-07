@@ -69,7 +69,6 @@ export default function ProductAdd(props) {
     if (productClone.length) {
       productClone.length = productClone.length.split(',').map((i) => i.trim());
     }
-    productClone.price = productClone.price; //ИСПРАВИТЬ
     productClone.numReviews = 0;
 
     const body = JSON.stringify(productClone);
