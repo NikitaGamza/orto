@@ -34,7 +34,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  console.log(action);
   const counterCartItems = (quantity) =>
     state.cart.cartItems.map((i) => {
       if (

@@ -4,7 +4,7 @@ import ProductList from '../../components/admin/ProductList/ProductList';
 import useProductFetch from '../../components/products/useProductFetch';
 import ProductAdd from '../../components/admin/ProductAdd/ProductAdd';
 import Control from '../../components/admin/Control/Control';
-import ModalEdit from '../../components/admin/ModalEdit/ModalEdit';
+import ModalEdit from '../../components/admin/ModalEdit/ModalEdit.1';
 import { Store } from '../../Store';
 import { ActionTypes } from '../../ActionTypes/ActionTypes';
 

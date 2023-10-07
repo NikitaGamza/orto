@@ -108,16 +108,14 @@ export default function ProductPage() {
             className="product__page__sizelist__selector"
             onChange={(e) => setSelectedPrice(JSON.parse(e.target.value))}
           >
-            {product != null &&
-              product.prices.map((item, index) => (
-                <option
-                  key={index}
-                  className="product__page__sizelist__selector__option"
-                  value={JSON.stringify(item)}
-                >
-                  {item.size}
-                </option>
-              ))}
+            {product.prices.map((item) => (
+              <option
+                className="product__page__sizelist__selector__option"
+                value={JSON.stringify(item)}
+              >
+                {item.size}
+              </option>
+            ))}
           </select>
         </div>
 
