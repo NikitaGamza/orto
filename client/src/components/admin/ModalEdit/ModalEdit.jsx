@@ -78,18 +78,19 @@ export default function ModalEdit(props) {
 
   const updateProduct = async () => {
     //переписать на фор
-    files.forEach(async (file, index) => {
-      await uploadFile(
-        file,
-        `${product.nameProduct}-${product.articul}-${index}`
-      );
-    });
+    for (const file of files) {
+      const index = files.indexOf(file);
+      // await uploadFile(
+      //   file,
+      //   `${index}`
+      // );
+      console.log(file)
+      // setImageUrls((prevState) => [...prevState, file])
+    }
     const productClone = product;
-    productClone.image = files.map(
-      (item, index) =>
-        `${productClone.nameProduct}-${productClone.articul}-${index}`
-    );
-    productClone.image = [...productClone.image, ...imageUrls];
+    productClone.image = product.image
+    console.log(product.images)
+    console.log(files)
 
     // return;
     const body = {
@@ -119,19 +120,11 @@ export default function ModalEdit(props) {
     if (state.product.isVisibleEditModal) {
       getProductById(state.product.editProductId);
     }
+    console.log(product)
   }, [state.product.isVisibleEditModal]);
 
-  useEffect(() => {
-    if (!isLoading) {
-      setImageUrls(
-        product.image.map(
-          (i) => `http://localhost:5000/static/images/products/${i}.jpg`
-        )
-      );
-    }
-  }, [isLoading]);
 
-  const Inputs = [
+  const Inputs  = [
     { title: 'Наименование', propName: 'name', type: InputType.text },
     { title: 'Ссылка', propName: 'slug', type: InputType.text },
     { title: 'Длинна', propName: 'length', type: InputType.text },
