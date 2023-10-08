@@ -162,7 +162,13 @@ productRouter.put('/', async (req, res) => {
   res.json(editedProduct);
 });
 
-productRouter.patch('/', async (req, res) => {});
+//КАКТО ТАК
+// productRouter.patch('/editFile', async (req, res) => {
+//   console.log(req.body);
+//   const body = req.body
+//   const updateFiles = await Product.findOneAndUpdate(body._id, body.image)
+//   res.json(updateFiles)
+// });
 
 export default productRouter;
 

@@ -18,3 +18,7 @@ export const uploadFile = async (file, fileName) => {
   formData.append('names', fileName);
   await axios.post('/api/products/upload', formData);
 };
+
+export const updateFiles = async (body) => {
+  await axios.patch('/api/products/editFile', body);
+};

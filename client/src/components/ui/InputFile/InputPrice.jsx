@@ -23,7 +23,7 @@ export default function InputPrice({ priceList, setPriceList }) {
       <button onClick={priceSync}>Синхронизировать цену</button>
 
       {priceList.map((item, index) => (
-        <div>
+        <div key={index}>
           <input
             type="text"
             onChange={(e) => {

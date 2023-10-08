@@ -8,7 +8,7 @@ import InputPrice from '../../ui/InputFile/InputPrice';
 import { getProductCategory } from '../../../api/category.js';
 import InputGenerator from '../../generator/InputGenerator';
 import { InputType } from '../../generator/InputTypes.enum';
-import { uploadFile } from '../../../api/product';
+import { uploadFile, updateFiles } from '../../../api/product';
 
 export default function ModalEdit(props) {
   const { setIsModalVisible } = props;
@@ -76,11 +76,22 @@ export default function ModalEdit(props) {
     }
   };
 
+  //эксперементальная функция
+  const updateImages = async () => {
+    const allFiles = [...product.image, ...files];
+    const body = {
+      _id: product._id,
+      image: allFiles,
+    };
+    await updateFiles(body);
+  };
+
   const updateProduct = async () => {
     //переписать на фор
     for (const file of files) {
       const index = files.indexOf(file);
       // await uploadFile(
+      //id,
       //   file,
       //   `${index}`
       // );
@@ -152,7 +163,7 @@ export default function ModalEdit(props) {
           files={files}
           setFiles={setFiles}
           onRemove={onRemoveFile}
-          imageUrls={imageUrls}
+          imageUrls={product.image} //тут было imageUrls
           setImageUrls={setImageUrls}
         />
 
@@ -172,7 +183,7 @@ export default function ModalEdit(props) {
         <InputPrice priceList={priceList} setPriceList={setPriceList} />
         <button
           onClick={() => {
-            onEdit();
+            updateImages();
           }}
         >
           Сохранить изменения
