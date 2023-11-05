@@ -1,15 +1,18 @@
 import React, { useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import './InputFile.scss';
+import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function InputFile(props) {
-  const { setFiles, onRemove, imageUrls, setImageUrls } = props;
+  const { setFiles, onRemove, imageUrls, setImageUrls, files } = props;
 
   const inputFileRef = useRef(null);
 
   const onChangeFileInput = (event) => {
     const files = event.target.files;
-
+    // файлы сейчас норм преобразуются, поправь их под то как их ждет бек и все
+    console.log(files)
+    console.log(imageUrls)
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
 
@@ -19,6 +22,17 @@ export default function InputFile(props) {
       setImageUrls((prevValue) => [...prevValue, url]);
     }
   };
+  let preparedImages = []
+
+  imageUrls.forEach(el => {
+    if (el.includes('localhost')) {
+      preparedImages.push(el)
+
+    } else {
+      preparedImages.push(`http://localhost:5000/static/images/products/${el}.jpg`)
+    }
+  })
+  console.log(preparedImages)
 
   const onRemoveExtended = (e, index) => {
     const urlsClone = imageUrls;
@@ -50,7 +64,7 @@ export default function InputFile(props) {
       </Form.Group>
 
       <div className={'added-image'}>
-        {imageUrls.map((url, index) => (
+        {preparedImages.map((url, index) => (
           <div className="added-image-container" key={index}>
             <img src={url} alt={'*'} />
 

@@ -77,19 +77,20 @@ export default function ModalEdit(props) {
   };
 
   const updateProduct = async () => {
-    //переписать на фор
-    files.forEach(async (file, index) => {
-      await uploadFile(
-        file,
-        `${product.nameProduct}-${product.articul}-${index}`
-      );
-    });
-    const productClone = product;
-    productClone.image = files.map(
-      (item, index) =>
-        `${productClone.nameProduct}-${productClone.articul}-${index}`
-    );
-    productClone.image = [...productClone.image];
+    console.log(files)
+    // for (const file of files) {
+    //   const index = files.indexOf(file);
+    //   await uploadFile(
+    //     file,
+    //     `${product.nameProduct}-${product.articul}-${index}`
+    //   );
+    // }
+    // const productClone = product;
+    // productClone.image = files.map(
+    //   (item, index) =>
+    //     `${productClone.nameProduct}-${productClone.articul}-${index}`
+    // );
+    // productClone.image = [...productClone.image];
 
     // return;
     const body = {
@@ -99,7 +100,7 @@ export default function ModalEdit(props) {
       price: Number(product.price),
       rating: Number(product.rating),
       size: Number(product.size),
-      image: productClone.image,
+      // image: productClone.image,
     };
 
     try {
@@ -125,7 +126,7 @@ export default function ModalEdit(props) {
     if (!isLoading) {
       setImageUrls(
         product.image.map(
-          (i) => `http://localhost:5000/static/images/products/${i}.jpg`
+          (i) => `${i}`
         )
       );
     }
